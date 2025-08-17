@@ -1,0 +1,29 @@
+{
+  "instructions": "Exemple de structure JSON pour automatisation IA",
+  "usage": "Utilisez cette structure pour générer automatiquement des sites via IA",
+  "example_prompt": "Créez un site de jardinage pour 'Jardins Verts SARL' à Lyon avec services de tonte, élagage et création de terrasses. Couleur principale: vert foncé. Contact: 04.XX.XX.XX.XX",
+  "expected_output": {
+    "branding": {
+      "companyName": "Jardins Verts SARL",
+      "slogan": "Votre partenaire jardinage à Lyon",
+      "logoUrl": "https://example.com/logo.png"
+    },
+    "theme": {
+      "primaryColor": "#166534",
+      "secondaryColor": "#84cc16"
+    },
+    "contact": {
+      "phone": "04.XX.XX.XX.XX",
+      "email": "contact@jardinsverts.fr",
+      "address": "Lyon, France"
+    },
+    "services": [
+      {
+        "name": "Tonte de pelouse",
+        "description": "Service professionnel de tonte",
+        "imageUrl": "https://example.com/tonte.jpg",
+        "price": "À partir de 30€"
+      }
+    ]
+  }
+}

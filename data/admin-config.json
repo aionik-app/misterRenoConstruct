@@ -1,0 +1,7 @@
+{
+  "adminCode": "JARDIN2024",
+  "lastUpdated": "2024-01-15T10:30:00Z",
+  "sessionTimeout": 60,
+  "maxLoginAttempts": 5,
+  "lockoutDuration": 15
+}
