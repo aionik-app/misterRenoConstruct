@@ -6,7 +6,6 @@ Un système complet de création de sites vitrines pour entreprises de jardinage
 
 ### Deux Versions de Site
 - **Version 1** (`/`) : Design moderne avec couleurs vertes naturelles
-- **Version 2** (`/v2`) : Design minimaliste et épuré
 
 ### Interface d'Administration
 - **URL** : `/admin`
@@ -41,7 +40,6 @@ Un système complet de création de sites vitrines pour entreprises de jardinage
    - **Services** : Liste des services proposés
    - **À propos** : Présentation de l'entreprise
    - **Galerie** : Images des réalisations
-   - **Témoignages** : Avis clients
 
 ### Services de Jardinage Inclus
 - Tonte de pelouse
@@ -58,20 +56,53 @@ Un système complet de création de sites vitrines pour entreprises de jardinage
 
 \`\`\`
 ├── app/
-│   ├── page.tsx              # Version 1 du site
-│   ├── v2/page.tsx           # Version 2 du site
+│   ├── layout.tsx              # Version site
+│   ├── global.css              # Version site
+│   ├── page.tsx              # Version site
 │   ├── admin/page.tsx        # Interface d'administration
 │   └── api/                  # API routes
 ├── components/
-│   ├── *.tsx                 # Composants version 1
-│   ├── v2/                   # Composants version 2
-│   └── admin/                # Composants admin
+│   ├── about.tsx      # Composants
+│   ├── contact.tsx    # Composants
+│   ├── footer.tsx     # Composants
+│   ├── gallery.tsx.   # Composants
+│   ├── header.tsx     # Composants
+│   ├── hero.tsx       # Composants
+│   ├── services.tsx   # Composants
+│   ├── admin/                              # Composants admin
+│   │     │└── editors/                     # Composants admin editors
+│   │     │       ├── about-editor.tsx      # Composants admin about editor
+│   │     │       ├── branding-editor.tsx      # Composants admin branding editor
+│   │     │       ├── contact-editor.tsx      # Composants admin contact editor 
+│   │     │       ├── footer-editor.tsx      # Composants admin footer editor
+│   │     │       ├── gallery-editor.tsx      # Composants admin gallery editor
+│   │     │       ├── hero-editor.tsx      # Composants admin hero editor
+│   │     │       ├── metatdata-editor.tsx      # Composants admin metadata editor
+│   │     │       ├── security-editor.tsx      # Composants admin security editor
+│   │     │       └──  services-editor.tsx      # Composants admin services editor
+│   │     │
+│   │     ├── admin-dashboard.tsx   # Composants admin
+│   │     └── admin-login.tsx       # Composants admin
+│   │
+│   └── ui/
+│       ├── alert.tsx
+│       ├── badge.tsx
+│       ├── button.tsx
+│       ├── input.tsx
+│       ├── label.tsx
+│       ├── sheet.tsx
+│       ├── tabs.tsx
+│       └── textarea.tsx 
+│ 
+│ 
 ├── data/
 │   ├── site-config.json      # Configuration du site
 │   └── admin-config.json     # Configuration admin
 ├── types/
 │   └── site-config.ts        # Types TypeScript
 └── lib/
+    ├── admin-auth.ts          # Utilitaires de gestion des données
+    ├── utils.ts          # Utilitaires de gestion des données
     └── site-data.ts          # Utilitaires de gestion des données
 \`\`\`
 
@@ -111,7 +142,7 @@ Le projet est prêt pour le déploiement sur Vercel, Netlify ou tout autre hébe
 
 ## 📝 Automatisation IA
 
-Le fichier `site-config.json` est conçu pour être généré automatiquement par des IA comme Gemini. Structure standardisée pour faciliter l'automatisation de création de sites.
+Le fichier `site-config.json` est conçu pour être généré automatiquement par des IA . Structure standardisée pour faciliter l'automatisation de création de sites.
 
 ## 🆘 Support
 

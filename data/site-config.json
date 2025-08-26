@@ -1,235 +1,192 @@
 {
-  "version": "v1",
-  "metadata": {
-    "title": "Jardins & Espaces Verts - Services de Jardinage Professionnel",
-    "description": "Spécialiste en aménagement extérieur, tonte de pelouse, création de terrasses, plantation et entretien de jardins. Devis gratuit.",
-    "keywords": [
-      "jardinage",
-      "tonte pelouse",
-      "terrasse bois",
-      "aménagement extérieur",
-      "plantation",
-      "gazon",
-      "klinkers",
-      "dalle romaine"
-    ]
-  },
-  "branding": {
-    "companyName": "Jardins & Espaces Verts",
-    "logo": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=200&h=80&fit=crop",
-    "favicon": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=32&h=32&fit=crop"
-  },
-  "theme": {
-    "primaryColor": "#22c55e",
-    "secondaryColor": "#16a34a",
-    "accentColor": "#84cc16",
-    "backgroundColor": "#ffffff",
-    "textColor": "#1f2937"
-  },
-  "contact": {
-    "phone": "+33 1 23 45 67 89",
-    "email": "contact@jardins-espaces-verts.fr",
-    "address": "123 Rue des Jardins",
-    "city": "Paris",
-    "postalCode": "75001",
-    "coordinates": {
-      "lat": 48.8566,
-      "lng": 2.3522
-    }
-  },
-  "hero": {
-    "title": "Transformez votre espace extérieur",
-    "subtitle": "Services de jardinage professionnel",
-    "description": "Nous créons et entretenons vos jardins avec passion. Tonte, aménagement, terrasses, plantation - Votre satisfaction est notre priorité.",
-    "backgroundImage": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1920&h=1080&fit=crop",
-    "ctaText": "Devis Gratuit",
-    "ctaLink": "#contact"
-  },
-  "services": [
-    {
-      "id": "tonte-pelouse",
-      "title": "Tonte de Pelouse",
-      "description": "Entretien régulier de votre pelouse pour un gazon parfait toute l'année. Service hebdomadaire ou mensuel selon vos besoins.",
-      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-      "price": "À partir de 35€",
-      "features": ["Tonte professionnelle", "Ramassage des déchets", "Bordures nettes", "Conseils d'entretien"],
-      "icon": "🌱"
-    },
-    {
-      "id": "mauvaises-herbes",
-      "title": "Désherbage",
-      "description": "Élimination efficace des mauvaises herbes pour préserver la beauté de vos espaces verts.",
-      "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      "price": "À partir de 25€",
-      "features": ["Désherbage manuel", "Traitement écologique", "Prévention repousse", "Respect de l'environnement"],
-      "icon": "🌿"
-    },
-    {
-      "id": "terrasse-bois",
-      "title": "Terrasses en Bois",
-      "description": "Création de terrasses en bois sur mesure pour sublimer votre espace extérieur.",
-      "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
-      "price": "Sur devis",
-      "features": ["Bois de qualité", "Design personnalisé", "Installation professionnelle", "Garantie 5 ans"],
-      "icon": "🪵"
-    },
-    {
-      "id": "amenagement-exterieur",
-      "title": "Aménagement Extérieur",
-      "description": "Conception et réalisation d'aménagements paysagers complets selon vos envies.",
-      "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      "price": "Sur devis",
-      "features": ["Étude personnalisée", "Plans 3D", "Matériaux premium", "Suivi de projet"],
-      "icon": "🏡"
-    },
-    {
-      "id": "plantation",
-      "title": "Plantation",
-      "description": "Sélection et plantation d'arbres, arbustes et fleurs adaptés à votre environnement.",
-      "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      "price": "À partir de 15€",
-      "features": ["Conseils d'experts", "Plantes de saison", "Plantation soignée", "Garantie reprise"],
-      "icon": "🌺"
-    },
-    {
-      "id": "pose-gazon",
-      "title": "Pose de Gazon",
-      "description": "Installation de gazon en rouleaux ou semis pour un résultat immédiat et durable.",
-      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-      "price": "À partir de 8€/m²",
-      "features": ["Préparation du sol", "Gazon de qualité", "Arrosage initial", "Conseils d'entretien"],
-      "icon": "🌾"
-    },
-    {
-      "id": "terrasse-klinkers",
-      "title": "Terrasses Klinkers",
-      "description": "Pose de terrasses en klinkers pour un style authentique et durable.",
-      "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
-      "price": "À partir de 45€/m²",
-      "features": ["Klinkers authentiques", "Pose traditionnelle", "Joints sable", "Résistance maximale"],
-      "icon": "🧱"
-    },
-    {
-      "id": "dalle-romaine",
-      "title": "Dalles Romaines",
-      "description": "Installation de dalles romaines pour des allées et terrasses élégantes.",
-      "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
-      "price": "À partir de 35€/m²",
-      "features": ["Pierre naturelle", "Finition soignée", "Drainage optimal", "Style intemporel"],
-      "icon": "🏛️"
-    }
-  ],
-  "about": {
-    "title": "Notre Expertise à Votre Service",
-    "description": "Avec plus de 15 ans d'expérience dans l'aménagement paysager, notre équipe de professionnels passionnés transforme vos espaces extérieurs en véritables havres de paix. Nous combinons savoir-faire traditionnel et techniques modernes pour des résultats exceptionnels.",
-    "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
-    "features": [
-      "15 ans d'expérience",
-      "Équipe certifiée",
-      "Matériaux de qualité",
-      "Devis gratuit",
-      "Garantie travaux",
-      "Service après-vente"
-    ]
-  },
-  "gallery": {
-    "title": "Nos Réalisations",
-    "images": [
-      {
-        "id": "1",
-        "url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-        "alt": "Aménagement jardin moderne",
-        "category": "amenagement",
-        "title": "Jardin Moderne"
-      },
-      {
-        "id": "2",
-        "url": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
-        "alt": "Terrasse en bois exotique",
-        "category": "terrasse",
-        "title": "Terrasse Bois"
-      },
-      {
-        "id": "3",
-        "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop",
-        "alt": "Pelouse parfaitement entretenue",
-        "category": "tonte",
-        "title": "Pelouse Parfaite"
-      },
-      {
-        "id": "4",
-        "url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-        "alt": "Plantation de massifs colorés",
-        "category": "plantation",
-        "title": "Massifs Colorés"
-      }
-    ]
-  },
-  "testimonials": {
-    "title": "Ce que disent nos clients",
-    "items": [
-      {
-        "id": "1",
-        "name": "Marie Dubois",
-        "location": "Paris 16ème",
-        "rating": 5,
-        "comment": "Service impeccable ! Mon jardin n'a jamais été aussi beau. L'équipe est professionnelle et à l'écoute.",
-        "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=80&h=80&fit=crop&crop=face"
-      },
-      {
-        "id": "2",
-        "name": "Pierre Martin",
-        "location": "Neuilly-sur-Seine",
-        "rating": 5,
-        "comment": "Excellent travail sur ma terrasse en bois. Finition parfaite et respect des délais. Je recommande vivement !",
-        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
-      },
-      {
-        "id": "3",
-        "name": "Sophie Leroy",
-        "location": "Boulogne-Billancourt",
-        "rating": 5,
-        "comment": "Très satisfaite de l'aménagement de mon jardin. L'équipe a su concrétiser mes idées avec créativité.",
-        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
-      }
-    ]
-  },
-  "footer": {
-    "description": "Votre partenaire de confiance pour tous vos projets d'aménagement extérieur. Contactez-nous pour un devis personnalisé.",
-    "socialLinks": [
-      {
-        "platform": "Facebook",
-        "url": "https://facebook.com/jardins-espaces-verts",
-        "icon": "facebook"
-      },
-      {
-        "platform": "Instagram",
-        "url": "https://instagram.com/jardins_espaces_verts",
-        "icon": "instagram"
-      },
-      {
-        "platform": "LinkedIn",
-        "url": "https://linkedin.com/company/jardins-espaces-verts",
-        "icon": "linkedin"
-      }
-    ],
-    "quickLinks": [
-      {
-        "title": "Nos Services",
-        "url": "#services"
-      },
-      {
-        "title": "À Propos",
-        "url": "#about"
-      },
-      {
-        "title": "Réalisations",
-        "url": "#gallery"
-      },
-      {
-        "title": "Contact",
-        "url": "#contact"
-      }
-    ]
-  }
+	"version": "v1",
+	"metadata": {
+		"title": "Rubini Garden",
+		"description": "Entreprise familiale de jardinage à Wezembeek — professionnelle et souriante.",
+		"keywords": [
+			"jardinage",
+			"tonte pelouse",
+			"terrasse bois",
+			"aménagement extérieur",
+			"plantation",
+			"gazon",
+			"klinkers",
+			"dalle romaine"
+		],
+		"faviconUrl": "/favicon.ico"
+	},
+	"branding": {
+		"companyName": "Rubini Garden",
+		"logo": "https://media.istockphoto.com/id/1317732079/fr/vectoriel/arbre-de-vie-de-contour.jpg?s=612x612&w=0&k=20&c=bDSb0CUB7MQMn_fU9Nr4R8fCQIMyILW8zN_aW2WNxpg=",
+		"favicon": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=32&h=32&fit=crop",
+		"logoUrl": "/logo.svg",
+		"slogan": "Votre jardin, notre sourire."
+	},
+	"theme": {
+		"primary": "#14532d",
+		"secondary": "#86efac"
+	},
+	"contact": {
+		"phone": "+32 470 46 47 48",
+		"email": "contact@rubinigarden.be",
+		"address": "34 Kalestraat, 1970 Wezembeek",
+		"city": "Wezembeek-oppem",
+		"postalCode": "1970"
+	},
+	"hero": {
+		"title": "Transformez votre espace extérieur",
+		"subtitle": "Experts en jardinage depuis 15 ans",
+		"description": "Nous créons et entretenons vos jardins avec passion. Tonte, aménagement, terrasses, plantation - Votre satisfaction est notre priorité.",
+		"backgroundImage": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
+		"ctaText": "Devis Gratuit",
+		"ctaLink": "#contact",
+		"headline": "Rubini Garden",
+		"subheadline": "Entreprise familiale de jardinage — 8 ouvriers, proximité et professionnalisme.",
+		"ctaLabel": "Demander un devis",
+		"ctaHref": "#contact",
+		"backgroundUrl": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
+		"stats": [
+			{
+				"id": "experience",
+				"value": "25+",
+				"label": "Années",
+				"icon": "award"
+			},
+			{
+				"id": "clients",
+				"value": "500+",
+				"label": "Clients",
+				"icon": "users"
+			},
+			{
+				"id": "organic",
+				"value": "100%",
+				"label": "Bio",
+				"icon": "leaf"
+			}
+		]
+	},
+	"services": [
+		{
+			"id": "tonte-pelouse",
+			"title": "Tonte de Pelouse",
+			"description": "Entretien régulier de votre pelouse pour un gazon parfait toute l'année. Service hebdomadaire ou mensuel selon vos besoins.",
+			"image": "https://lh3.googleusercontent.com/pw/AP1GczO2Id5UjBvFN2iYcft1ox017od19ZGCVhidB5jaJsgj1IJo88i840YhDljBW1EkLtGQPHw0Cui6OxUHVbfpS0gFYgnCfpsh9bGcG-oEPu54eU4LjShBGwlckF1a-9nrTf4i5orsXSIMlEckuXVQuAwI=w1167-h778-s-no-gm?authuser=0",
+			"price": "À partir de 35€",
+			"features": [
+				"Tonte professionnelle",
+				"Ramassage des déchets",
+				"Bordures nettes",
+				"Conseils d'entretien"
+			],
+			"icon": "🌱"
+		},
+		{
+			"id": "mauvaises-herbes",
+			"title": "Désherbage",
+			"description": "Élimination efficace des mauvaises herbes pour préserver la beauté de vos espaces verts.",
+			"image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
+			"price": "À partir de 25€",
+			"features": [
+				"Désherbage manuel",
+				"Traitement écologique",
+				"Prévention repousse",
+				"Respect de l'environnement"
+			],
+			"icon": "🌿"
+		},
+		{
+			"id": "terrasse-bois",
+			"title": "Terrasses en Bois",
+			"description": "Création de terrasses en bois sur mesure pour sublimer votre espace extérieur.",
+			"image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
+			"price": "Sur devis",
+			"features": [
+				"Bois de qualité",
+				"Design personnalisé",
+				"Installation professionnelle",
+				"Garantie 5 ans"
+			],
+			"icon": "🪵"
+		}
+	],
+	"about": {
+		"title": "Notre Expertise à Votre Service",
+		"description": "Avec plus de 45 ans d'expérience dans l'aménagement paysager, notre équipe de professionnels passionnés transforme vos espaces extérieurs en véritables havres de paix. Nous combinons savoir-faire traditionnel et techniques modernes pour des résultats exceptionnels.",
+		"image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
+		"features": []
+	},
+	"gallery": {
+		"title": "Nos Réalisations",
+		"images": [
+			{
+				"id": "1",
+				"url": "https://blog.techo-bloc.com/hubfs/2022-CA118-Showcase-RAP06636-HDR.jpg",
+				"alt": "Aménagement jardin moderne",
+				"category": "amenagement",
+				"title": "Jardin Moderne"
+			},
+			{
+				"id": "2",
+				"url": "https://decks-docks.com/wp-content/uploads/2017/08/Floating-Deck.jpg",
+				"alt": "Terrasse en bois exotique",
+				"category": "terrasse",
+				"title": "Terrasse Bois"
+			},
+			{
+				"id": "3",
+				"url": "https://www.southgateco.com/wp-content/uploads/2021/09/How-to-Give-Your-New-Backyard-a-Unique-Look.jpg",
+				"alt": "Pelouse parfaitement entretenue",
+				"category": "tonte",
+				"title": "Pelouse Parfaite"
+			},
+			{
+				"id": "4",
+				"url": "https://www.willemsefrance.fr/cdn/shop/articles/banniere_Comment_creer_un_magnifique_massif_de_fleurs_vivaces_dans_votre_jardin4_YZ_1dca2564-dbe6-439d-ab47-928ddf90a246.jpg?v=1747037864",
+				"alt": "Plantation de massifs colorés",
+				"category": "plantation",
+				"title": "Massifs Colorés"
+			}
+		],
+		"categories": ["Aménagement", "Terrasses", "Pelouse", "Plantation"]
+	},
+	"footer": {
+		"description": "Votre partenaire de confiance pour tous vos projets d'aménagement extérieur. Contactez-nous pour un devis personnalisé.",
+		"socialLinks": [
+			{
+				"platform": "Facebook",
+				"url": "https://facebook.com/jardins-espaces-verts",
+				"icon": "facebook"
+			},
+			{
+				"platform": "Instagram",
+				"url": "https://instagram.com/jardins_espaces_verts",
+				"icon": "instagram"
+			},
+			{
+				"platform": "LinkedIn",
+				"url": "https://linkedin.com/company/jardins-espaces-verts",
+				"icon": "linkedin"
+			}
+		],
+		"quickLinks": [
+			{
+				"title": "Nos Services",
+				"url": "#services"
+			},
+			{
+				"title": "À Propos",
+				"url": "#about"
+			},
+			{
+				"title": "Réalisations",
+				"url": "#gallery"
+			},
+			{
+				"title": "Contact",
+				"url": "#contact"
+			}
+		]
+	},
+	"lastModified": "2025-08-25T00:00:00.000Z"
 }
