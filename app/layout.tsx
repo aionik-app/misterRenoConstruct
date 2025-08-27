@@ -1,46 +1,31 @@
-import type { Metadata } from "next";
-import { Open_Sans, Work_Sans } from "next/font/google";
-import type React from "react";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Geist, Playfair_Display } from 'next/font/google';
+import type React from 'react';
+import './globals.css';
 
-const workSans = Work_Sans({
-	subsets: ["latin"],
-	display: "swap",
-	variable: "--font-work-sans",
+// On mappe directement sur les variables utilisées dans globals.css
+const geist = Geist({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans', // ✅ correspond à font-sans dans globals.css
 });
 
-const openSans = Open_Sans({
-	subsets: ["latin"],
-	display: "swap",
-	variable: "--font-open-sans",
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-serif', // ✅ correspond à font-serif dans globals.css
 });
 
 export const metadata: Metadata = {
-	title: "Jardins & Espaces Verts - Services de Jardinage Professionnel",
-	description:
-		"Spécialiste en aménagement extérieur, tonte de pelouse, création de terrasses, plantation et entretien de jardins. Devis gratuit.",
-	generator: "v0.app",
+  title: 'Jardins & Espaces Verts - Services de Jardinage Professionnel',
+  description:
+    'Spécialiste en aménagement extérieur, tonte de pelouse, création de terrasses, plantation et entretien de jardins. Devis gratuit.',
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
-	return (
-		<html lang="fr">
-			<head>
-				<style>{`
-html {
-  font-family: ${openSans.style.fontFamily};
-  --font-sans: ${openSans.variable};
-  --font-serif: ${workSans.variable};
-}
-        `}</style>
-			</head>
-			<body className={`${workSans.variable} ${openSans.variable} antialiased`}>
-				{children}
-			</body>
-		</html>
-	);
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="fr" className={`${geist.variable} ${playfairDisplay.variable}`}>
+      <body className="antialiased bg-background text-foreground font-sans">{children}</body>
+    </html>
+  );
 }

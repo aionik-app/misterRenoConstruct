@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "rubini-garden",
+    "date": "2025-08-26",
+    "sector": "Jardinage",
+    "culture": "Familiale, professionnelle, souriante",
+    "palette": {
+      "primary": {
+        "oklch": "oklch(0.450 0.080 150)",
+        "hex": "#166534"
+      },
+      "secondary": {
+        "oklch": "oklch(0.860 0.100 160)",
+        "hex": "#CFEAD9"
+      },
+      "background": {
+        "oklch": "oklch(0.985 0.005 100)",
+        "hex": "#FAFAF7"
+      },
+      "foreground": {
+        "oklch": "oklch(0.240 0.040 260)",
+        "hex": "#1C2431"
+      },
+      "accent": {
+        "oklch": "oklch(0.680 0.140 50)",
+        "hex": "#C26D3A"
+      }
+    },
+    "fonts": {
+      "sans": "Inter",
+      "serif": "Lora"
+    }
+  },
+  {
+    "slug": "rubini-garden-v2",
+    "date": "2025-08-27",
+    "sector": "Jardinage",
+    "culture": "Familiale, professionnelle, souriante",
+    "palette": {
+      "primary": {
+        "oklch": "oklch(0.580 0.120 140)",
+        "hex": "#248c59"
+      },
+      "secondary": {
+        "oklch": "oklch(0.820 0.060 120)",
+        "hex": "#c7e5c7"
+      },
+      "background": {
+        "oklch": "oklch(0.980 0.008 120)",
+        "hex": "#f5faf5"
+      },
+      "foreground": {
+        "oklch": "oklch(0.180 0.025 260)",
+        "hex": "#252d25"
+      },
+      "accent": {
+        "oklch": "oklch(0.750 0.150 70)",
+        "hex": "#e0b842"
+      }
+    },
+    "fonts": {
+      "sans": "Geist",
+      "serif": "Playfair Display"
+    }
+  }
+]
