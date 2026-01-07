@@ -48,6 +48,7 @@ export interface SiteConfig {
 		socialLinks: SocialLink[];
 		quickLinks: QuickLink[];
 	};
+	booking?: BookingConfig;
 	lastModified?: string;
 }
 
@@ -85,6 +86,18 @@ export interface SocialLink {
 export interface QuickLink {
 	title: string;
 	url: string;
+}
+
+export interface BookingConfig {
+	enabled: boolean;
+	apiUrl: string;
+	apiKey: string;
+	defaultDuration: number;
+	workingHours: {
+		start: string; // "HH:MM"
+		end: string; // "HH:MM"
+	};
+	workingDays: number[]; // 0 = Sunday, 1 = Monday, etc.
 }
 
 export interface AdminConfig {

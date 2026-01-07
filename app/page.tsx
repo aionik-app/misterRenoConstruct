@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { About } from "@/components/about";
+import { BookingForm } from "@/components/booking/booking-form";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { Gallery } from "@/components/gallery";
@@ -69,6 +70,11 @@ export default function HomePage() {
 				<About config={config} />
 				<Gallery config={config} />
 				<Contact config={config} />
+				{config.booking?.enabled && (
+					<section id="booking">
+						<BookingForm config={config.booking} />
+					</section>
+				)}
 			</main>
 			<Footer config={config} />
 		</div>

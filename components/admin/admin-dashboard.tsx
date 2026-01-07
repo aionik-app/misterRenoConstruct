@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	Calendar,
 	Eye,
 	FileText,
 	ImageIcon,
@@ -19,6 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { reloadSiteConfig, saveSiteConfig } from "@/lib/site-data";
 import type { SiteConfig } from "@/types/site-config";
 import { AboutEditor } from "./editors/about-editor";
+import { BookingEditor } from "./editors/booking-editor";
 import { BrandingEditor } from "./editors/branding-editor";
 import { ContactEditor } from "./editors/contact-editor";
 import { FooterEditor } from "./editors/footer-editor";
@@ -121,6 +123,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 		{ id: "about", label: "À Propos", icon: FileText },
 		{ id: "gallery", label: "Galerie", icon: ImageIcon },
 		{ id: "footer", label: "Footer", icon: Settings },
+		{ id: "booking", label: "Réservations", icon: Calendar },
 		{ id: "security", label: "Sécurité", icon: Key },
 	];
 
@@ -255,6 +258,10 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
 					<TabsContent value="footer">
 						<FooterEditor config={config} onUpdate={updateConfig} />
+					</TabsContent>
+
+					<TabsContent value="booking">
+						<BookingEditor config={config} onUpdate={updateConfig} />
 					</TabsContent>
 
 					<TabsContent value="security">
