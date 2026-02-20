@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le système de réservation permet aux visiteurs de votre site vitrine de prendre rendez-vous directement en ligne. Les rendez-vous sont automatiquement synchronisés avec l'application neoo_nx qui gère les plannings des jardiniers.
+Le système de réservation permet aux visiteurs de votre site vitrine de prendre rendez-vous directement en ligne. Les rendez-vous sont automatiquement synchronisés avec l'application Aionik qui gère les plannings des jardiniers.
 
 ## Architecture
 
@@ -11,7 +11,7 @@ Le système de réservation permet aux visiteurs de votre site vitrine de prendr
 - **Framework**: Next.js 15 (App Router)
 - **UI**: React 19 + shadcn/ui components
 - **Gestion des dates**: `react-day-picker` + `date-fns`
-- **API**: neoo_nx REST API publique
+- **API**: Aionik REST API publique
 - **Configuration**: JSON dans `data/site-config.json`
 
 ### Structure des Fichiers
@@ -46,8 +46,8 @@ Dans `data/site-config.json`, ajoutez la section `booking` (optionnelle) :
 {
   "booking": {
     "enabled": true,
-    "apiUrl": "https://votre-api-neoo.com",
-    "apiKey": "neoo_votre_cle_api",
+    "apiUrl": "https://votre-api-aionik.com",
+    "apiKey": "aionik_votre_cle_api",
     "defaultDuration": 60,
     "workingHours": {
       "start": "09:00",
@@ -63,8 +63,8 @@ Dans `data/site-config.json`, ajoutez la section `booking` (optionnelle) :
 | Paramètre | Type | Description | Exemple |
 |-----------|------|-------------|---------|
 | `enabled` | boolean | Active/désactive le système | `true` |
-| `apiUrl` | string | URL de l'API neoo_nx (sans `/` final) | `"https://api.neoo.app"` |
-| `apiKey` | string | Clé API fournie par neoo_nx | `"neoo_abc123..."` |
+| `apiUrl` | string | URL de l'API Aionik (sans `/` final) | `"https://api.aionik.com"` |
+| `apiKey` | string | Clé API fournie par Aionik | `"aionik_abc123..."` |
 | `defaultDuration` | number | Durée des RDV en minutes | `60` |
 | `workingHours.start` | string | Heure de début (HH:MM) | `"09:00"` |
 | `workingHours.end` | string | Heure de fin (HH:MM) | `"18:00"` |
@@ -79,7 +79,7 @@ Dans `data/site-config.json`, ajoutez la section `booking` (optionnelle) :
 3. Cliquez sur l'onglet **"Réservations"**
 4. Configurez les paramètres :
    - **Activer les réservations** : Toggle ON/OFF
-   - **URL de l'API** : Adresse de votre API neoo_nx
+   - **URL de l'API** : Adresse de votre API Aionik
    - **Clé API** : Votre clé d'authentification
    - **Durée des rendez-vous** : 30, 45, 60, 90 ou 120 minutes
    - **Heures de travail** : Début et fin de journée
@@ -121,7 +121,7 @@ Récapitulatif complet avant validation :
 
 ### Endpoints Utilisés
 
-Le système communique avec l'API publique de neoo_nx via deux actions :
+Le système communique avec l'API publique de Aionik via deux actions :
 
 #### 1. Vérification de Disponibilité
 
@@ -131,7 +131,7 @@ Le système communique avec l'API publique de neoo_nx via deux actions :
 ```json
 {
   "action": "check-availability",
-  "apiKey": "neoo_...",
+  "apiKey": "aionik_...",
   "date": "2026-01-15T10:00:00.000Z",
   "duration": 60
 }
@@ -153,7 +153,7 @@ Le système communique avec l'API publique de neoo_nx via deux actions :
 ```json
 {
   "action": "create",
-  "apiKey": "neoo_...",
+  "apiKey": "aionik_...",
   "clientFirstName": "Jean",
   "clientLastName": "Dupont",
   "clientEmail": "jean@example.com",
@@ -183,20 +183,20 @@ Vérifie si un créneau est disponible.
 
 ```typescript
 const availability = await checkAvailability(
-  "https://api.neoo.app",
-  "neoo_abc123",
+  "https://api.aionik.com",
+  "aionik_abc123",
   new Date("2026-01-15T10:00:00Z"),
   60
 );
 ```
 
 #### `createBooking(apiUrl, apiKey, formData)`
-Crée un rendez-vous dans neoo_nx.
+Crée un rendez-vous dans Aionik.
 
 ```typescript
 const result = await createBooking(
-  "https://api.neoo.app",
-  "neoo_abc123",
+  "https://api.aionik.com",
+  "aionik_abc123",
   {
     clientFirstName: "Jean",
     clientLastName: "Dupont",
@@ -359,11 +359,11 @@ Tous les composants utilisent Tailwind CSS et respectent le design system exista
 ### Erreur "Invalid API key"
 
 - Vérifier l'API key dans l'interface admin
-- Contacter l'administrateur neoo_nx pour régénérer une clé
+- Contacter l'administrateur Aionik pour régénérer une clé
 
 ### Erreur "This time slot is not available"
 
-- Le créneau est déjà réservé dans neoo_nx
+- Le créneau est déjà réservé dans Aionik
 - Essayer un autre créneau horaire
 
 ### Erreur CORS
@@ -401,7 +401,7 @@ pnpm build
 Pour toute question ou problème :
 1. Consulter cette documentation
 2. Vérifier les logs de la console navigateur
-3. Contacter le support technique neoo_nx
+3. Contacter le support technique Aionik
 
 ## Notes de Migration
 

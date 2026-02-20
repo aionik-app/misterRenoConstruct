@@ -1,142 +1,190 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { DayPicker } from "react-day-picker";
-import { fr } from "date-fns/locale";
-import { addMonths } from "date-fns";
-import { formatTime, generateTimeSlots, isWorkingDay } from "@/lib/booking";
-import type { BookingConfig } from "@/types/site-config";
-import { Label } from "@/components/ui/label";
+import { addMonths } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { Calendar, Clock } from 'lucide-react';
+import { useState } from 'react';
+import { DayPicker, getDefaultClassNames } from 'react-day-picker';
+import 'react-day-picker/style.css';
+import { formatTime, generateTimeSlots, isWorkingDay } from '@/lib/booking';
+import type { BookingConfig } from '@/types/site-config';
 
 interface DateTimePickerProps {
-	config: BookingConfig;
-	selectedDateTime: Date | null;
-	onDateTimeChange: (date: Date) => void;
+  config: BookingConfig;
+  selectedDateTime: Date | null;
+  onDateTimeChange: (date: Date) => void;
 }
 
 export function DateTimePicker({
-	config,
-	selectedDateTime,
-	onDateTimeChange,
+  config,
+  selectedDateTime,
+  onDateTimeChange,
 }: DateTimePickerProps) {
-	const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-		selectedDateTime || undefined,
-	);
-	const [selectedTime, setSelectedTime] = useState<Date | null>(
-		selectedDateTime || null,
-	);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(selectedDateTime || undefined);
+  const [selectedTime, setSelectedTime] = useState<Date | null>(selectedDateTime || null);
 
-	const workingDays = config.workingDays || [1, 2, 3, 4, 5]; // Lun-Ven par défaut
+  const defaultClassNames = getDefaultClassNames();
+  const workingDays = config.workingDays || [1, 2, 3, 4, 5];
 
-	// Filtrer les jours non ouvrables
-	const disabledDays = (date: Date) => {
-		return !isWorkingDay(date, workingDays);
-	};
+  const disabledDays = (date: Date) => !isWorkingDay(date, workingDays);
 
-	// Gérer la sélection de date
-	const handleDateChange = (date: Date | undefined) => {
-		if (date) {
-			setSelectedDate(date);
-			setSelectedTime(null); // Réinitialiser l'heure
-		}
-	};
+  const handleDateChange = (date: Date | undefined) => {
+    if (date) {
+      setSelectedDate(date);
+      setSelectedTime(null);
+    }
+  };
 
-	// Gérer la sélection d'heure
-	const handleTimeChange = (time: Date) => {
-		setSelectedTime(time);
-		onDateTimeChange(time);
-	};
+  const handleTimeChange = (time: Date) => {
+    setSelectedTime(time);
+    onDateTimeChange(time);
+  };
 
-	// Générer les créneaux horaires
-	const timeSlots = selectedDate
-		? generateTimeSlots(
-				selectedDate,
-				config.workingHours.start,
-				config.workingHours.end,
-				30,
-			)
-		: [];
+  const timeSlots = selectedDate
+    ? generateTimeSlots(selectedDate, config.workingHours.start, config.workingHours.end, 30)
+    : [];
 
-	return (
-		<div className="space-y-6">
-			{/* Sélecteur de date */}
-			<div>
-				<Label className="block text-sm font-medium mb-2">
-					Sélectionnez une date
-				</Label>
-				<div className="flex justify-center">
-					<DayPicker
-						mode="single"
-						selected={selectedDate}
-						onSelect={handleDateChange}
-						disabled={disabledDays}
-						fromDate={new Date()}
-						toDate={addMonths(new Date(), 3)}
-						locale={fr}
-						className="border rounded-lg p-3"
-						classNames={{
-							months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-							month: "space-y-4",
-							caption: "flex justify-center pt-1 relative items-center",
-							caption_label: "text-sm font-medium",
-							nav: "space-x-1 flex items-center",
-							nav_button:
-								"h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-							nav_button_previous: "absolute left-1",
-							nav_button_next: "absolute right-1",
-							table: "w-full border-collapse space-y-1",
-							head_row: "flex",
-							head_cell:
-								"text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
-							row: "flex w-full mt-2",
-							cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-							day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
-							day_range_end: "day-range-end",
-							day_selected:
-								"bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-							day_today: "bg-accent text-accent-foreground",
-							day_outside:
-								"day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
-							day_disabled: "text-muted-foreground opacity-50",
-							day_range_middle:
-								"aria-selected:bg-accent aria-selected:text-accent-foreground",
-							day_hidden: "invisible",
-						}}
-					/>
-				</div>
-			</div>
+  const morningSlots = timeSlots.filter((s) => s.getHours() < 12);
+  const afternoonSlots = timeSlots.filter((s) => s.getHours() >= 12);
 
-			{/* Sélecteur d'heure */}
-			{selectedDate && (
-				<div>
-					<Label className="block text-sm font-medium mb-2">
-						Sélectionnez une heure
-					</Label>
-					<div className="grid grid-cols-3 gap-2 max-h-64 overflow-y-auto">
-						{timeSlots.map((slot, index) => {
-							const isSelected =
-								selectedTime && slot.getTime() === selectedTime.getTime();
-							return (
-								<button
-									key={index}
-									type="button"
-									onClick={() => handleTimeChange(slot)}
-									className={`
-										px-4 py-2 rounded border transition-colors text-sm
-										${
-											isSelected
-												? "bg-primary text-primary-foreground border-primary"
-												: "bg-background border-input hover:border-primary hover:bg-accent"
-										}
-									`}
-								>
-									{formatTime(slot)}
-								</button>
-							);
-						})}
-					</div>
-				</div>
-			)}
-		</div>
-	);
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Calendar */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+              <Calendar className="h-4 w-4 text-primary" />
+            </div>
+            <h3 className="font-semibold text-foreground">Choisissez une date</h3>
+          </div>
+          <div className="flex justify-center lg:justify-start">
+            <DayPicker
+              mode="single"
+              selected={selectedDate}
+              onSelect={handleDateChange}
+              disabled={disabledDays}
+              startMonth={new Date()}
+              endMonth={addMonths(new Date(), 3)}
+              locale={fr}
+              classNames={{
+                root: `${defaultClassNames.root} rounded-xl border border-border bg-card p-4 shadow-sm`,
+                months: `${defaultClassNames.months}`,
+                month_caption: 'flex justify-center items-center py-2',
+                caption_label: 'text-base font-semibold text-foreground capitalize',
+                nav: `${defaultClassNames.nav}`,
+                button_previous: `${defaultClassNames.button_previous} rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground`,
+                button_next: `${defaultClassNames.button_next} rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground`,
+                chevron: `${defaultClassNames.chevron} fill-current`,
+                weekdays: 'flex',
+                weekday:
+                  'w-10 h-10 flex items-center justify-center text-xs font-semibold text-muted-foreground uppercase',
+                week: 'flex',
+                day: 'w-10 h-10 flex items-center justify-center',
+                day_button:
+                  'w-9 h-9 rounded-lg text-sm font-medium transition-all hover:bg-primary/10 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30',
+                selected: 'bg-primary text-primary-foreground rounded-lg hover:bg-primary/90',
+                today: 'font-bold text-primary',
+                outside: 'text-muted-foreground/40',
+                disabled:
+                  'text-muted-foreground/25 cursor-not-allowed hover:bg-transparent hover:text-muted-foreground/25',
+                hidden: 'invisible',
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Time slots */}
+        {selectedDate && (
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                <Clock className="h-4 w-4 text-primary" />
+              </div>
+              <h3 className="font-semibold text-foreground">Choisissez un créneau</h3>
+            </div>
+
+            <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+              <div className="space-y-5 max-h-[360px] overflow-y-auto pr-1">
+                {morningSlots.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                      Matin
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {morningSlots.map((slot) => {
+                        const isSelected =
+                          selectedTime && slot.getTime() === selectedTime.getTime();
+                        return (
+                          <button
+                            key={slot.toISOString()}
+                            type="button"
+                            onClick={() => handleTimeChange(slot)}
+                            className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 ${
+                              isSelected
+                                ? 'bg-primary text-primary-foreground border-primary shadow-sm scale-[1.02]'
+                                : 'bg-background border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
+                            }`}
+                          >
+                            {formatTime(slot)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {afternoonSlots.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                      Après-midi
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {afternoonSlots.map((slot) => {
+                        const isSelected =
+                          selectedTime && slot.getTime() === selectedTime.getTime();
+                        return (
+                          <button
+                            key={slot.toISOString()}
+                            type="button"
+                            onClick={() => handleTimeChange(slot)}
+                            className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 ${
+                              isSelected
+                                ? 'bg-primary text-primary-foreground border-primary shadow-sm scale-[1.02]'
+                                : 'bg-background border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
+                            }`}
+                          >
+                            {formatTime(slot)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {timeSlots.length === 0 && (
+                  <div className="text-center py-10 text-muted-foreground text-sm">
+                    Aucun créneau disponible pour cette date.
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!selectedDate && (
+          <div className="flex-1 flex items-center justify-center min-w-0">
+            <div className="text-center py-10 px-6 rounded-xl border border-dashed border-border bg-muted/20">
+              <Clock className="h-10 w-10 text-muted-foreground/30 mx-auto mb-3" />
+              <p className="text-sm text-muted-foreground">
+                Sélectionnez une date pour afficher les créneaux disponibles
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

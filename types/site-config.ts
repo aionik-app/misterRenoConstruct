@@ -1,123 +1,160 @@
 export interface SiteConfig {
-	version: string;
-	metadata: {
-		title: string;
-		description: string;
-		keywords: string[];
-	};
-	branding: {
-		companyName: string;
-		logo: string;
-		favicon: string;
-	};
-	// Theme configuration (key-value color map)
-	theme: {
-		[key: string]: string;
-	};
+  version: string;
+  metadata: {
+    title: string;
+    description: string;
+    keywords: string[];
+  };
+  branding: {
+    companyName: string;
+    logo: string;
+    favicon: string;
+  };
+  // Theme configuration (key-value color map)
+  theme: {
+    [key: string]: string;
+  };
 
-	contact: {
-		phone: string;
-		email: string;
-		address: string;
-		city: string;
-		postalCode: string;
-	};
-	hero: {
-		title: string;
-		subtitle: string;
-		description: string;
-		backgroundImage: string;
-		ctaText: string;
-		ctaLink: string;
-		stats?: HeroStat[];
-	};
-	services: Service[];
-	about: {
-		title: string;
-		description: string;
-		image: string;
-		features: string[];
-	};
-	gallery: {
-		title: string;
-		images: GalleryImage[];
-		categories: string[];
-	};
-	footer: {
-		description: string;
-		socialLinks: SocialLink[];
-		quickLinks: QuickLink[];
-	};
-	booking?: BookingConfig;
-	lastModified?: string;
+  contact: {
+    phone: string;
+    email: string;
+    address: string;
+    city: string;
+    postalCode: string;
+  };
+  hero: {
+    title: string;
+    subtitle: string;
+    description: string;
+    backgroundImage: string;
+    ctaText: string;
+    ctaLink: string;
+    stats?: HeroStat[];
+  };
+  services: Service[];
+  about: {
+    title: string;
+    description: string;
+    image: string;
+    features: string[];
+  };
+  gallery: {
+    title: string;
+    images: GalleryImage[];
+    categories: string[];
+  };
+  testimonials?: TestimonialsConfig;
+  pricing?: PricingConfig;
+  footer: {
+    description: string;
+    socialLinks: SocialLink[];
+    quickLinks: QuickLink[];
+  };
+  booking?: BookingConfig;
+  lastModified?: string;
 }
 
 interface HeroStat {
-	id: string;
-	icon: string;
-	value: string | number;
-	label: string;
+  id: string;
+  icon: string;
+  value: string | number;
+  label: string;
 }
 
 export interface Service {
-	id: string;
-	title: string;
-	description: string;
-	image: string;
-	price?: string;
-	features: string[];
-	icon: string;
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  price?: string;
+  features: string[];
+  icon: string;
 }
 
 export interface GalleryImage {
-	id: string;
-	url: string;
-	alt: string;
-	category: string;
-	title?: string;
+  id: string;
+  url: string;
+  alt: string;
+  category: string;
+  title?: string;
 }
 
 export interface SocialLink {
-	platform: string;
-	url: string;
-	icon: string;
+  platform: string;
+  url: string;
+  icon: string;
 }
 
 export interface QuickLink {
-	title: string;
-	url: string;
+  title: string;
+  url: string;
+}
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  role?: string;
+  content: string;
+  rating: number; // 1-5
+  avatar?: string;
+}
+
+export interface TestimonialsConfig {
+  enabled: boolean;
+  title: string;
+  subtitle?: string;
+  items: Testimonial[];
+}
+
+export interface PricingTier {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  period?: string;
+  features: string[];
+  highlighted?: boolean;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+export interface PricingConfig {
+  enabled: boolean;
+  title: string;
+  subtitle?: string;
+  tiers: PricingTier[];
 }
 
 export interface BookingConfig {
-	enabled: boolean;
-	apiUrl: string;
-	apiKey: string;
-	defaultDuration: number;
-	workingHours: {
-		start: string; // "HH:MM"
-		end: string; // "HH:MM"
-	};
-	workingDays: number[]; // 0 = Sunday, 1 = Monday, etc.
+  enabled: boolean;
+  apiUrl: string;
+  apiKey: string;
+  defaultDuration: number;
+  workingHours: {
+    start: string; // "HH:MM"
+    end: string; // "HH:MM"
+  };
+  workingDays: number[]; // 0 = Sunday, 1 = Monday, etc.
 }
 
 export interface AdminConfig {
-	adminCode: string;
-	lastUpdated: string;
-	sessionTimeout: number; // in minutes
-	maxLoginAttempts: number;
-	lockoutDuration: number; // in minutes
-	allowedIPs?: string[];
+  adminCode: string;
+  lastUpdated: string;
+  sessionTimeout: number; // in minutes
+  maxLoginAttempts: number;
+  lockoutDuration: number; // in minutes
+  allowedIPs?: string[];
 }
 
 export interface LoginAttempt {
-	ip: string;
-	timestamp: string;
-	success: boolean;
+  ip: string;
+  timestamp: string;
+  success: boolean;
 }
 
 export interface AdminSession {
-	token: string;
-	createdAt: string;
-	expiresAt: string;
-	ip: string;
+  token: string;
+  createdAt: string;
+  expiresAt: string;
+  ip: string;
 }

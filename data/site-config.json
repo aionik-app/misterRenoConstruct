@@ -1,192 +1,296 @@
 {
-	"version": "v1",
-	"metadata": {
-		"title": "Rubini Garden",
-		"description": "Entreprise familiale de jardinage à Wezembeek — professionnelle et souriante.",
-		"keywords": [
-			"jardinage",
-			"tonte pelouse",
-			"terrasse bois",
-			"aménagement extérieur",
-			"plantation",
-			"gazon",
-			"klinkers",
-			"dalle romaine"
-		],
-		"faviconUrl": "/favicon.ico"
-	},
-	"branding": {
-		"companyName": "Rubini Garden",
-		"logo": "https://media.istockphoto.com/id/1317732079/fr/vectoriel/arbre-de-vie-de-contour.jpg?s=612x612&w=0&k=20&c=bDSb0CUB7MQMn_fU9Nr4R8fCQIMyILW8zN_aW2WNxpg=",
-		"favicon": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=32&h=32&fit=crop",
-		"logoUrl": "/logo.svg",
-		"slogan": "Votre jardin, notre sourire."
-	},
-	"theme": {
-		"primary": "#14532d",
-		"secondary": "#86efac"
-	},
-	"contact": {
-		"phone": "+32 470 46 47 48",
-		"email": "contact@rubinigarden.be",
-		"address": "34 Kalestraat, 1970 Wezembeek",
-		"city": "Wezembeek-oppem",
-		"postalCode": "1970"
-	},
-	"hero": {
-		"title": "Transformez votre espace extérieur",
-		"subtitle": "Experts en jardinage depuis 15 ans",
-		"description": "Nous créons et entretenons vos jardins avec passion. Tonte, aménagement, terrasses, plantation - Votre satisfaction est notre priorité.",
-		"backgroundImage": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
-		"ctaText": "Devis Gratuit",
-		"ctaLink": "#contact",
-		"headline": "Rubini Garden",
-		"subheadline": "Entreprise familiale de jardinage — 8 ouvriers, proximité et professionnalisme.",
-		"ctaLabel": "Demander un devis",
-		"ctaHref": "#contact",
-		"backgroundUrl": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
-		"stats": [
-			{
-				"id": "experience",
-				"value": "25+",
-				"label": "Années",
-				"icon": "award"
-			},
-			{
-				"id": "clients",
-				"value": "500+",
-				"label": "Clients",
-				"icon": "users"
-			},
-			{
-				"id": "organic",
-				"value": "100%",
-				"label": "Bio",
-				"icon": "leaf"
-			}
-		]
-	},
-	"services": [
-		{
-			"id": "tonte-pelouse",
-			"title": "Tonte de Pelouse",
-			"description": "Entretien régulier de votre pelouse pour un gazon parfait toute l'année. Service hebdomadaire ou mensuel selon vos besoins.",
-			"image": "https://lh3.googleusercontent.com/pw/AP1GczO2Id5UjBvFN2iYcft1ox017od19ZGCVhidB5jaJsgj1IJo88i840YhDljBW1EkLtGQPHw0Cui6OxUHVbfpS0gFYgnCfpsh9bGcG-oEPu54eU4LjShBGwlckF1a-9nrTf4i5orsXSIMlEckuXVQuAwI=w1167-h778-s-no-gm?authuser=0",
-			"price": "À partir de 35€",
-			"features": [
-				"Tonte professionnelle",
-				"Ramassage des déchets",
-				"Bordures nettes",
-				"Conseils d'entretien"
-			],
-			"icon": "🌱"
-		},
-		{
-			"id": "mauvaises-herbes",
-			"title": "Désherbage",
-			"description": "Élimination efficace des mauvaises herbes pour préserver la beauté de vos espaces verts.",
-			"image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-			"price": "À partir de 25€",
-			"features": [
-				"Désherbage manuel",
-				"Traitement écologique",
-				"Prévention repousse",
-				"Respect de l'environnement"
-			],
-			"icon": "🌿"
-		},
-		{
-			"id": "terrasse-bois",
-			"title": "Terrasses en Bois",
-			"description": "Création de terrasses en bois sur mesure pour sublimer votre espace extérieur.",
-			"image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
-			"price": "Sur devis",
-			"features": [
-				"Bois de qualité",
-				"Design personnalisé",
-				"Installation professionnelle",
-				"Garantie 5 ans"
-			],
-			"icon": "🪵"
-		}
-	],
-	"about": {
-		"title": "Notre Expertise à Votre Service",
-		"description": "Avec plus de 45 ans d'expérience dans l'aménagement paysager, notre équipe de professionnels passionnés transforme vos espaces extérieurs en véritables havres de paix. Nous combinons savoir-faire traditionnel et techniques modernes pour des résultats exceptionnels.",
-		"image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
-		"features": []
-	},
-	"gallery": {
-		"title": "Nos Réalisations",
-		"images": [
-			{
-				"id": "1",
-				"url": "https://blog.techo-bloc.com/hubfs/2022-CA118-Showcase-RAP06636-HDR.jpg",
-				"alt": "Aménagement jardin moderne",
-				"category": "amenagement",
-				"title": "Jardin Moderne"
-			},
-			{
-				"id": "2",
-				"url": "https://decks-docks.com/wp-content/uploads/2017/08/Floating-Deck.jpg",
-				"alt": "Terrasse en bois exotique",
-				"category": "terrasse",
-				"title": "Terrasse Bois"
-			},
-			{
-				"id": "3",
-				"url": "https://www.southgateco.com/wp-content/uploads/2021/09/How-to-Give-Your-New-Backyard-a-Unique-Look.jpg",
-				"alt": "Pelouse parfaitement entretenue",
-				"category": "tonte",
-				"title": "Pelouse Parfaite"
-			},
-			{
-				"id": "4",
-				"url": "https://www.willemsefrance.fr/cdn/shop/articles/banniere_Comment_creer_un_magnifique_massif_de_fleurs_vivaces_dans_votre_jardin4_YZ_1dca2564-dbe6-439d-ab47-928ddf90a246.jpg?v=1747037864",
-				"alt": "Plantation de massifs colorés",
-				"category": "plantation",
-				"title": "Massifs Colorés"
-			}
-		],
-		"categories": ["Aménagement", "Terrasses", "Pelouse", "Plantation"]
-	},
-	"footer": {
-		"description": "Votre partenaire de confiance pour tous vos projets d'aménagement extérieur. Contactez-nous pour un devis personnalisé.",
-		"socialLinks": [
-			{
-				"platform": "Facebook",
-				"url": "https://facebook.com/jardins-espaces-verts",
-				"icon": "facebook"
-			},
-			{
-				"platform": "Instagram",
-				"url": "https://instagram.com/jardins_espaces_verts",
-				"icon": "instagram"
-			},
-			{
-				"platform": "LinkedIn",
-				"url": "https://linkedin.com/company/jardins-espaces-verts",
-				"icon": "linkedin"
-			}
-		],
-		"quickLinks": [
-			{
-				"title": "Nos Services",
-				"url": "#services"
-			},
-			{
-				"title": "À Propos",
-				"url": "#about"
-			},
-			{
-				"title": "Réalisations",
-				"url": "#gallery"
-			},
-			{
-				"title": "Contact",
-				"url": "#contact"
-			}
-		]
-	},
-	"lastModified": "2025-08-25T00:00:00.000Z"
+  "version": "v1",
+  "metadata": {
+    "title": "Rubini Garden",
+    "description": "Entreprise familiale de jardinage à Wezembeek — professionnelle et souriante.",
+    "keywords": [
+      "jardinage",
+      "tonte pelouse",
+      "terrasse bois",
+      "aménagement extérieur",
+      "plantation",
+      "gazon",
+      "klinkers",
+      "dalle romaine"
+    ],
+    "faviconUrl": "/favicon.ico"
+  },
+  "branding": {
+    "companyName": "Rubini Garden",
+    "logo": "https://media.istockphoto.com/id/1317732079/fr/vectoriel/arbre-de-vie-de-contour.jpg?s=612x612&w=0&k=20&c=bDSb0CUB7MQMn_fU9Nr4R8fCQIMyILW8zN_aW2WNxpg=",
+    "favicon": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=32&h=32&fit=crop",
+    "logoUrl": "/logo.svg",
+    "slogan": "Votre jardin, notre sourire."
+  },
+  "theme": {
+    "primary": "#14532d",
+    "secondary": "#86efac"
+  },
+  "contact": {
+    "phone": "+32 470 46 47 48",
+    "email": "contact@rubinigarden.be",
+    "address": "34 Kalestraat, 1970 Wezembeek",
+    "city": "Wezembeek-oppem",
+    "postalCode": "1970"
+  },
+  "hero": {
+    "title": "Transformez votre espace extérieur",
+    "subtitle": "Experts en jardinage depuis 15 ans",
+    "description": "Nous créons et entretenons vos jardins avec passion. Tonte, aménagement, terrasses, plantation - Votre satisfaction est notre priorité.",
+    "backgroundImage": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
+    "ctaText": "Devis Gratuit",
+    "ctaLink": "#contact",
+    "headline": "Rubini Garden",
+    "subheadline": "Entreprise familiale de jardinage — 8 ouvriers, proximité et professionnalisme.",
+    "ctaLabel": "Demander un devis",
+    "ctaHref": "#contact",
+    "backgroundUrl": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
+    "stats": [
+      {
+        "id": "experience",
+        "value": "25+",
+        "label": "Années",
+        "icon": "award"
+      },
+      {
+        "id": "clients",
+        "value": "500+",
+        "label": "Clients",
+        "icon": "users"
+      },
+      {
+        "id": "organic",
+        "value": "100%",
+        "label": "Bio",
+        "icon": "leaf"
+      }
+    ]
+  },
+  "services": [
+    {
+      "id": "tonte-pelouse",
+      "title": "Tonte de Pelouse",
+      "description": "Entretien régulier de votre pelouse pour un gazon parfait toute l'année. Service hebdomadaire ou mensuel selon vos besoins.",
+      "image": "https://lh3.googleusercontent.com/pw/AP1GczO2Id5UjBvFN2iYcft1ox017od19ZGCVhidB5jaJsgj1IJo88i840YhDljBW1EkLtGQPHw0Cui6OxUHVbfpS0gFYgnCfpsh9bGcG-oEPu54eU4LjShBGwlckF1a-9nrTf4i5orsXSIMlEckuXVQuAwI=w1167-h778-s-no-gm?authuser=0",
+      "price": "À partir de 35€",
+      "features": [
+        "Tonte professionnelle",
+        "Ramassage des déchets",
+        "Bordures nettes",
+        "Conseils d'entretien"
+      ],
+      "icon": "🌱"
+    },
+    {
+      "id": "mauvaises-herbes",
+      "title": "Désherbage",
+      "description": "Élimination efficace des mauvaises herbes pour préserver la beauté de vos espaces verts.",
+      "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
+      "price": "À partir de 25€",
+      "features": [
+        "Désherbage manuel",
+        "Traitement écologique",
+        "Prévention repousse",
+        "Respect de l'environnement"
+      ],
+      "icon": "🌿"
+    },
+    {
+      "id": "terrasse-bois",
+      "title": "Terrasses en Bois",
+      "description": "Création de terrasses en bois sur mesure pour sublimer votre espace extérieur.",
+      "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
+      "price": "Sur devis",
+      "features": [
+        "Bois de qualité",
+        "Design personnalisé",
+        "Installation professionnelle",
+        "Garantie 5 ans"
+      ],
+      "icon": "🪵"
+    }
+  ],
+  "about": {
+    "title": "Notre Expertise à Votre Service",
+    "description": "Avec plus de 45 ans d'expérience dans l'aménagement paysager, notre équipe de professionnels passionnés transforme vos espaces extérieurs en véritables havres de paix. Nous combinons savoir-faire traditionnel et techniques modernes pour des résultats exceptionnels.",
+    "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
+    "features": []
+  },
+  "gallery": {
+    "title": "Nos Réalisations",
+    "images": [
+      {
+        "id": "1",
+        "url": "https://blog.techo-bloc.com/hubfs/2022-CA118-Showcase-RAP06636-HDR.jpg",
+        "alt": "Aménagement jardin moderne",
+        "category": "amenagement",
+        "title": "Jardin Moderne"
+      },
+      {
+        "id": "2",
+        "url": "https://decks-docks.com/wp-content/uploads/2017/08/Floating-Deck.jpg",
+        "alt": "Terrasse en bois exotique",
+        "category": "terrasse",
+        "title": "Terrasse Bois"
+      },
+      {
+        "id": "3",
+        "url": "https://www.southgateco.com/wp-content/uploads/2021/09/How-to-Give-Your-New-Backyard-a-Unique-Look.jpg",
+        "alt": "Pelouse parfaitement entretenue",
+        "category": "tonte",
+        "title": "Pelouse Parfaite"
+      },
+      {
+        "id": "4",
+        "url": "https://www.willemsefrance.fr/cdn/shop/articles/banniere_Comment_creer_un_magnifique_massif_de_fleurs_vivaces_dans_votre_jardin4_YZ_1dca2564-dbe6-439d-ab47-928ddf90a246.jpg?v=1747037864",
+        "alt": "Plantation de massifs colorés",
+        "category": "plantation",
+        "title": "Massifs Colorés"
+      }
+    ],
+    "categories": [
+      "Aménagement",
+      "Terrasses",
+      "Pelouse",
+      "Plantation"
+    ]
+  },
+  "testimonials": {
+    "enabled": true,
+    "title": "Ce Que Disent Nos Clients",
+    "subtitle": "Découvrez les témoignages de nos clients satisfaits",
+    "items": [
+      {
+        "id": "t1",
+        "name": "Marie Dupont",
+        "role": "Propriétaire à Wezembeek",
+        "content": "Un travail remarquable ! Mon jardin n'a jamais été aussi beau. L'équipe est ponctuelle, soignée et très professionnelle.",
+        "rating": 5
+      },
+      {
+        "id": "t2",
+        "name": "Pierre Lambert",
+        "role": "Villa à Tervuren",
+        "content": "Rubini Garden a complètement transformé notre terrasse. Le résultat dépasse nos attentes. Je recommande vivement !",
+        "rating": 5
+      },
+      {
+        "id": "t3",
+        "name": "Sophie Janssens",
+        "role": "Résidence à Kraainem",
+        "content": "Service d'entretien régulier impeccable. Ils prennent soin de notre jardin comme si c'était le leur. Très fiable.",
+        "rating": 4
+      }
+    ]
+  },
+  "pricing": {
+    "enabled": true,
+    "title": "Nos Tarifs",
+    "subtitle": "Des formules adaptées à chaque besoin et chaque budget",
+    "tiers": [
+      {
+        "id": "entretien",
+        "name": "Entretien",
+        "description": "Entretien régulier de votre jardin",
+        "price": "35€",
+        "period": "par passage",
+        "features": [
+          "Tonte de pelouse",
+          "Taille des bordures",
+          "Ramassage des déchets",
+          "Conseils personnalisés"
+        ],
+        "ctaText": "Demander un devis",
+        "ctaLink": "#contact"
+      },
+      {
+        "id": "amenagement",
+        "name": "Aménagement",
+        "description": "Création et transformation de vos espaces",
+        "price": "Sur devis",
+        "features": [
+          "Étude personnalisée",
+          "Plan d'aménagement",
+          "Fourniture des matériaux",
+          "Installation complète",
+          "Garantie 2 ans"
+        ],
+        "highlighted": true,
+        "ctaText": "Demander un devis",
+        "ctaLink": "#contact"
+      },
+      {
+        "id": "premium",
+        "name": "Premium",
+        "description": "Service complet clé en main",
+        "price": "Sur devis",
+        "features": [
+          "Tout de la formule Aménagement",
+          "Entretien mensuel inclus",
+          "Suivi saisonnier",
+          "Remplacement des plantations",
+          "Support prioritaire",
+          "Conseils d'un paysagiste"
+        ],
+        "ctaText": "Nous contacter",
+        "ctaLink": "#contact"
+      }
+    ]
+  },
+  "footer": {
+    "description": "Votre partenaire de confiance pour tous vos projets d'aménagement extérieur. Contactez-nous pour un devis personnalisé.",
+    "socialLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/jardins-espaces-verts",
+        "icon": "facebook"
+      },
+      {
+        "platform": "Instagram",
+        "url": "https://instagram.com/jardins_espaces_verts",
+        "icon": "instagram"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://linkedin.com/company/jardins-espaces-verts",
+        "icon": "linkedin"
+      }
+    ],
+    "quickLinks": [
+      {
+        "title": "Nos Services",
+        "url": "#services"
+      },
+      {
+        "title": "À Propos",
+        "url": "#about"
+      },
+      {
+        "title": "Réalisations",
+        "url": "#gallery"
+      },
+      {
+        "title": "Contact",
+        "url": "#contact"
+      }
+    ]
+  },
+  "lastModified": "2026-02-20T11:56:00.764Z",
+  "booking": {
+    "enabled": true,
+    "apiUrl": "Clement@example.com",
+    "apiKey": "rubiniGarden",
+    "defaultDuration": 60,
+    "workingHours": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "workingDays": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  }
 }
