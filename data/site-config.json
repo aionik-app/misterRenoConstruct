@@ -279,7 +279,7 @@
   "booking": {
     "enabled": true,
     "apiUrl": "Clement@example.com",
-    "apiKey": "rubiniGarden",
+    "apiKey": "rg_demo_rubini_garden_booking_key",
     "defaultDuration": 60,
     "workingHours": {
       "start": "09:00",

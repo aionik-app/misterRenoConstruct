@@ -2,11 +2,11 @@
 
 import { addMonths } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { DayPicker, getDefaultClassNames } from 'react-day-picker';
 import 'react-day-picker/style.css';
-import { formatTime, generateTimeSlots, isWorkingDay } from '@/lib/booking';
+import { checkDayAvailability, formatTime, generateTimeSlots, isWorkingDay } from '@/lib/booking';
 import type { BookingConfig } from '@/types/site-config';
 
 interface DateTimePickerProps {
@@ -22,6 +22,8 @@ export function DateTimePicker({
 }: DateTimePickerProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(selectedDateTime || undefined);
   const [selectedTime, setSelectedTime] = useState<Date | null>(selectedDateTime || null);
+  const [slotAvailability, setSlotAvailability] = useState<Record<string, boolean> | null>(null);
+  const [checkingAvailability, setCheckingAvailability] = useState(false);
 
   const defaultClassNames = getDefaultClassNames();
   const workingDays = config.workingDays || [1, 2, 3, 4, 5];
@@ -29,10 +31,25 @@ export function DateTimePicker({
   const disabledDays = (date: Date) => !isWorkingDay(date, workingDays);
 
   const handleDateChange = (date: Date | undefined) => {
-    if (date) {
-      setSelectedDate(date);
-      setSelectedTime(null);
-    }
+    if (!date) return;
+    setSelectedDate(date);
+    setSelectedTime(null);
+    setSlotAvailability(null);
+    setCheckingAvailability(true);
+
+    const now = new Date();
+    const allSlots = generateTimeSlots(
+      date,
+      config.workingHours.start,
+      config.workingHours.end,
+      30
+    );
+    const futureSlots = allSlots.filter((slot) => slot > now);
+
+    checkDayAvailability(config.apiUrl, config.apiKey, futureSlots, config.defaultDuration)
+      .then((availability) => setSlotAvailability(availability))
+      .catch(() => setSlotAvailability(null))
+      .finally(() => setCheckingAvailability(false));
   };
 
   const handleTimeChange = (time: Date) => {
@@ -40,9 +57,20 @@ export function DateTimePicker({
     onDateTimeChange(time);
   };
 
+  const now = new Date();
   const timeSlots = selectedDate
-    ? generateTimeSlots(selectedDate, config.workingHours.start, config.workingHours.end, 30)
+    ? generateTimeSlots(
+        selectedDate,
+        config.workingHours.start,
+        config.workingHours.end,
+        30
+      ).filter((slot) => slot > now)
     : [];
+
+  const isSlotAvailable = (slot: Date): boolean => {
+    if (!slotAvailability) return true;
+    return slotAvailability[slot.toISOString()] ?? false;
+  };
 
   const morningSlots = timeSlots.filter((s) => s.getHours() < 12);
   const afternoonSlots = timeSlots.filter((s) => s.getHours() >= 12);
@@ -102,72 +130,139 @@ export function DateTimePicker({
                 <Clock className="h-4 w-4 text-primary" />
               </div>
               <h3 className="font-semibold text-foreground">Choisissez un créneau</h3>
+              {checkingAvailability && (
+                <span className="flex items-center gap-1.5 text-xs text-muted-foreground ml-auto">
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  Vérification…
+                </span>
+              )}
+              {!checkingAvailability && slotAvailability && (
+                <span className="text-xs text-muted-foreground ml-auto">
+                  {Object.values(slotAvailability).filter(Boolean).length} créneau
+                  {Object.values(slotAvailability).filter(Boolean).length !== 1 ? 'x' : ''}{' '}
+                  disponible
+                  {Object.values(slotAvailability).filter(Boolean).length !== 1 ? 's' : ''}
+                </span>
+              )}
             </div>
 
             <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
               <div className="space-y-5 max-h-[360px] overflow-y-auto pr-1">
-                {morningSlots.length > 0 && (
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                      Matin
-                    </p>
-                    <div className="grid grid-cols-3 gap-2">
-                      {morningSlots.map((slot) => {
-                        const isSelected =
-                          selectedTime && slot.getTime() === selectedTime.getTime();
-                        return (
-                          <button
-                            key={slot.toISOString()}
-                            type="button"
-                            onClick={() => handleTimeChange(slot)}
-                            className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 ${
-                              isSelected
-                                ? 'bg-primary text-primary-foreground border-primary shadow-sm scale-[1.02]'
-                                : 'bg-background border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
-                            }`}
-                          >
-                            {formatTime(slot)}
-                          </button>
-                        );
-                      })}
-                    </div>
+                {checkingAvailability ? (
+                  <div className="space-y-3">
+                    {[...Array(6)].map((_, i) => (
+                      <div
+                        // biome-ignore lint/suspicious/noArrayIndexKey: skeleton placeholders
+                        key={i}
+                        className="grid grid-cols-3 gap-2"
+                      >
+                        {[...Array(3)].map((_, j) => (
+                          <div
+                            // biome-ignore lint/suspicious/noArrayIndexKey: skeleton placeholders
+                            key={j}
+                            className="h-10 rounded-lg bg-muted animate-pulse"
+                          />
+                        ))}
+                      </div>
+                    ))}
                   </div>
-                )}
+                ) : (
+                  <>
+                    {morningSlots.length > 0 && (
+                      <div>
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                          Matin
+                        </p>
+                        <div className="grid grid-cols-3 gap-2">
+                          {morningSlots.map((slot) => {
+                            const isSelected =
+                              selectedTime && slot.getTime() === selectedTime.getTime();
+                            const available = isSlotAvailable(slot);
+                            return (
+                              <button
+                                key={slot.toISOString()}
+                                type="button"
+                                onClick={() => available && handleTimeChange(slot)}
+                                disabled={!available}
+                                title={available ? undefined : 'Créneau déjà réservé'}
+                                className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 ${
+                                  !available
+                                    ? 'bg-muted/40 border-border text-muted-foreground/40 line-through cursor-not-allowed'
+                                    : isSelected
+                                      ? 'bg-primary text-primary-foreground border-primary shadow-sm scale-[1.02]'
+                                      : 'bg-background border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
+                                }`}
+                              >
+                                {formatTime(slot)}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
 
-                {afternoonSlots.length > 0 && (
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                      Après-midi
-                    </p>
-                    <div className="grid grid-cols-3 gap-2">
-                      {afternoonSlots.map((slot) => {
-                        const isSelected =
-                          selectedTime && slot.getTime() === selectedTime.getTime();
-                        return (
-                          <button
-                            key={slot.toISOString()}
-                            type="button"
-                            onClick={() => handleTimeChange(slot)}
-                            className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 ${
-                              isSelected
-                                ? 'bg-primary text-primary-foreground border-primary shadow-sm scale-[1.02]'
-                                : 'bg-background border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
-                            }`}
-                          >
-                            {formatTime(slot)}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
+                    {afternoonSlots.length > 0 && (
+                      <div>
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                          Après-midi
+                        </p>
+                        <div className="grid grid-cols-3 gap-2">
+                          {afternoonSlots.map((slot) => {
+                            const isSelected =
+                              selectedTime && slot.getTime() === selectedTime.getTime();
+                            const available = isSlotAvailable(slot);
+                            return (
+                              <button
+                                key={slot.toISOString()}
+                                type="button"
+                                onClick={() => available && handleTimeChange(slot)}
+                                disabled={!available}
+                                title={available ? undefined : 'Créneau déjà réservé'}
+                                className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 ${
+                                  !available
+                                    ? 'bg-muted/40 border-border text-muted-foreground/40 line-through cursor-not-allowed'
+                                    : isSelected
+                                      ? 'bg-primary text-primary-foreground border-primary shadow-sm scale-[1.02]'
+                                      : 'bg-background border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
+                                }`}
+                              >
+                                {formatTime(slot)}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
 
-                {timeSlots.length === 0 && (
-                  <div className="text-center py-10 text-muted-foreground text-sm">
-                    Aucun créneau disponible pour cette date.
-                  </div>
+                    {timeSlots.length === 0 && (
+                      <div className="text-center py-10 text-muted-foreground text-sm">
+                        Aucun créneau disponible pour cette date.
+                      </div>
+                    )}
+
+                    {timeSlots.length > 0 &&
+                      slotAvailability &&
+                      Object.values(slotAvailability).every((v) => !v) && (
+                        <div className="text-center py-4 text-sm text-muted-foreground bg-muted/30 rounded-lg border border-dashed border-border">
+                          Tous les créneaux sont réservés pour cette journée.
+                        </div>
+                      )}
+
+                    {slotAvailability && (
+                      <div className="flex items-center gap-4 pt-2 border-t border-border text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-3 h-3 rounded bg-primary/20 border border-primary/40 inline-block" />
+                          Disponible
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-3 h-3 rounded bg-muted/40 border border-border inline-block" />
+                          Réservé
+                        </span>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>

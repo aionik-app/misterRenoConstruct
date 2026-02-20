@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { resolveApiUrl } from '@/lib/booking';
 import type { BookingConfig, SiteConfig } from '@/types/site-config';
 
 interface BookingEditorProps {
@@ -50,7 +51,7 @@ export function BookingEditor({ config, onUpdate }: BookingEditorProps) {
       tomorrow.setDate(tomorrow.getDate() + 1);
       tomorrow.setHours(10, 0, 0, 0);
 
-      const response = await fetch(`${booking.apiUrl}/api/public/booking`, {
+      const response = await fetch(`${resolveApiUrl(booking.apiUrl)}/api/public/booking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

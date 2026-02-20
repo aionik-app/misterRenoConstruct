@@ -1,6 +1,15 @@
 import type { AvailabilityResponse, BookingFormData, BookingResponse } from '@/types/booking';
 
 /**
+ * Résout l'URL de l'API Aionik.
+ * NEXT_PUBLIC_BOOKING_API_URL (env) prend le dessus sur la valeur issue de site-config.json.
+ * Permet d'utiliser une URL locale en dev sans toucher à la config de production.
+ */
+export function resolveApiUrl(configApiUrl: string): string {
+  return process.env.NEXT_PUBLIC_BOOKING_API_URL || configApiUrl;
+}
+
+/**
  * Vérifier la disponibilité d'un créneau
  */
 export async function checkAvailability(
@@ -10,7 +19,7 @@ export async function checkAvailability(
   duration: number
 ): Promise<AvailabilityResponse> {
   try {
-    const response = await fetch(`${apiUrl}/api/public/booking`, {
+    const response = await fetch(`${resolveApiUrl(apiUrl)}/api/public/booking`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +53,7 @@ export async function createBooking(
   formData: BookingFormData
 ): Promise<BookingResponse> {
   try {
-    const response = await fetch(`${apiUrl}/api/public/booking`, {
+    const response = await fetch(`${resolveApiUrl(apiUrl)}/api/public/booking`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,6 +95,30 @@ export async function createBooking(
       error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
+}
+
+/**
+ * Vérifier la disponibilité de plusieurs créneaux en parallèle pour une journée
+ * Retourne un objet clé = ISO string du slot, valeur = disponible ou non
+ */
+export async function checkDayAvailability(
+  apiUrl: string,
+  apiKey: string,
+  slots: Date[],
+  duration: number
+): Promise<Record<string, boolean>> {
+  const results = await Promise.allSettled(
+    slots.map((slot) => checkAvailability(apiUrl, apiKey, slot, duration))
+  );
+
+  const availability: Record<string, boolean> = {};
+  for (let i = 0; i < slots.length; i++) {
+    const key = slots[i].toISOString();
+    const result = results[i];
+    availability[key] = result.status === 'fulfilled' && result.value.available;
+  }
+
+  return availability;
 }
 
 /**
