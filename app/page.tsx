@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { About } from '@/components/about';
 import { BookingForm } from '@/components/booking/booking-form';
 import { Contact } from '@/components/contact';
@@ -17,6 +17,7 @@ import type { SiteConfig } from '@/types/site-config';
 export default function HomePage() {
   const [config, setConfig] = useState<SiteConfig | null>(null);
   const [loading, setLoading] = useState(true);
+  const lastFocusReload = useRef<number>(0);
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -32,8 +33,13 @@ export default function HomePage() {
 
     loadConfig();
 
+    // Throttle à 30s pour éviter les rechargements intempestifs pendant le formulaire de booking
     const handleFocus = () => {
-      loadConfig();
+      const now = Date.now();
+      if (now - lastFocusReload.current > 30_000) {
+        lastFocusReload.current = now;
+        loadConfig();
+      }
     };
 
     window.addEventListener('focus', handleFocus);

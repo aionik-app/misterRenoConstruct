@@ -15,7 +15,7 @@ import {
   RotateCcw,
   User,
 } from 'lucide-react';
-import { useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -46,16 +46,29 @@ export function BookingForm({ config }: BookingFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [eventId, setEventId] = useState<string | null>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (error && errorRef.current) {
+      errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [error]);
 
   const [formData, setFormData] = useState<Omit<BookingFormData, 'startDate' | 'duration'>>({
     clientFirstName: '',
     clientLastName: '',
     clientEmail: '',
     clientPhone: '',
-    clientAddress: '',
     title: '',
     description: '',
     note: '',
+  });
+
+  const [addressParts, setAddressParts] = useState({
+    street: '',
+    streetNumber: '',
+    postalCode: '',
+    city: '',
   });
 
   const currentStepIndex = STEPS.findIndex((s) => s.key === step);
@@ -98,6 +111,14 @@ export function BookingForm({ config }: BookingFormProps) {
 
   const updateField = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    if (error) setError(null);
+  };
+
+  const updateAddressPart = (
+    field: 'street' | 'streetNumber' | 'postalCode' | 'city',
+    value: string
+  ) => {
+    setAddressParts((prev) => ({ ...prev, [field]: value }));
     if (error) setError(null);
   };
 
@@ -146,6 +167,12 @@ export function BookingForm({ config }: BookingFormProps) {
     try {
       const result = await createBooking(config.apiUrl, config.apiKey, {
         ...formData,
+        clientAddress: {
+          street: addressParts.street,
+          streetNumber: addressParts.streetNumber,
+          postalCode: addressParts.postalCode,
+          city: addressParts.city,
+        },
         startDate: selectedDateTime,
         duration: config.defaultDuration,
       });
@@ -171,11 +198,11 @@ export function BookingForm({ config }: BookingFormProps) {
       clientLastName: '',
       clientEmail: '',
       clientPhone: '',
-      clientAddress: '',
       title: '',
       description: '',
       note: '',
     });
+    setAddressParts({ street: '', streetNumber: '', postalCode: '', city: '' });
     setError(null);
     setEventId(null);
   };
@@ -231,7 +258,7 @@ export function BookingForm({ config }: BookingFormProps) {
       <Card className="border-0 shadow-lg">
         <CardContent className="p-6 sm:p-8">
           {error && (
-            <Alert variant="destructive" className="mb-6">
+            <Alert ref={errorRef} variant="destructive" className="mb-6">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
@@ -246,35 +273,45 @@ export function BookingForm({ config }: BookingFormProps) {
               />
 
               {selectedDateTime && (
-                <div className="flex flex-col sm:flex-row items-center gap-4 p-4 bg-primary/5 rounded-xl border border-primary/10">
-                  <div className="flex items-center gap-3 flex-1">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Calendar className="h-5 w-5 text-primary" />
+                <div className="space-y-3">
+                  {error && (
+                    <Alert variant="destructive">
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                  )}
+                  <div className="flex flex-col sm:flex-row items-center gap-4 p-4 bg-primary/5 rounded-xl border border-primary/10">
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Calendar className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">
+                          {formatDate(selectedDateTime)}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {formatTime(selectedDateTime)} — {config.defaultDuration} min
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium text-foreground">{formatDate(selectedDateTime)}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {formatTime(selectedDateTime)} — {config.defaultDuration} min
-                      </p>
-                    </div>
+                    <Button
+                      type="button"
+                      onClick={handleContinueToDetails}
+                      disabled={loading}
+                      className="w-full sm:w-auto"
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Vérification...
+                        </>
+                      ) : (
+                        <>
+                          Continuer
+                          <ArrowRight className="h-4 w-4 ml-2" />
+                        </>
+                      )}
+                    </Button>
                   </div>
-                  <Button
-                    onClick={handleContinueToDetails}
-                    disabled={loading}
-                    className="w-full sm:w-auto"
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Vérification...
-                      </>
-                    ) : (
-                      <>
-                        Continuer
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </>
-                    )}
-                  </Button>
                 </div>
               )}
             </div>
@@ -378,17 +415,64 @@ export function BookingForm({ config }: BookingFormProps) {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor={`${uid}-address`}>Adresse</Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id={`${uid}-address`}
-                      value={formData.clientAddress}
-                      onChange={(e) => updateField('clientAddress', e.target.value)}
-                      placeholder="Rue, numéro, code postal, ville"
-                      className="pl-10"
-                    />
+                <div className="space-y-3">
+                  <Label className="flex items-center gap-1">
+                    <MapPin className="h-4 w-4 text-muted-foreground" />
+                    Adresse du lieu d'intervention
+                  </Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div className="sm:col-span-3 space-y-2">
+                      <Label htmlFor={`${uid}-street`} className="text-xs text-muted-foreground">
+                        Rue
+                      </Label>
+                      <Input
+                        id={`${uid}-street`}
+                        value={addressParts.street}
+                        onChange={(e) => updateAddressPart('street', e.target.value)}
+                        placeholder="Rue de la Paix"
+                      />
+                    </div>
+                    <div className="sm:col-span-1 space-y-2">
+                      <Label
+                        htmlFor={`${uid}-streetNumber`}
+                        className="text-xs text-muted-foreground"
+                      >
+                        Numéro
+                      </Label>
+                      <Input
+                        id={`${uid}-streetNumber`}
+                        value={addressParts.streetNumber}
+                        onChange={(e) => updateAddressPart('streetNumber', e.target.value)}
+                        placeholder="12"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label
+                        htmlFor={`${uid}-postalCode`}
+                        className="text-xs text-muted-foreground"
+                      >
+                        Code postal
+                      </Label>
+                      <Input
+                        id={`${uid}-postalCode`}
+                        value={addressParts.postalCode}
+                        onChange={(e) => updateAddressPart('postalCode', e.target.value)}
+                        placeholder="1000"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor={`${uid}-city`} className="text-xs text-muted-foreground">
+                        Ville
+                      </Label>
+                      <Input
+                        id={`${uid}-city`}
+                        value={addressParts.city}
+                        onChange={(e) => updateAddressPart('city', e.target.value)}
+                        placeholder="Bruxelles"
+                      />
+                    </div>
                   </div>
                   <p className="text-xs text-muted-foreground">
                     Adresse du lieu d'intervention (si différente de votre domicile)
@@ -500,11 +584,21 @@ export function BookingForm({ config }: BookingFormProps) {
                     <span className="font-medium text-foreground">{formData.clientEmail}</span>
                     <span className="text-muted-foreground">Téléphone</span>
                     <span className="font-medium text-foreground">{formData.clientPhone}</span>
-                    {formData.clientAddress && (
+                    {(addressParts.street ||
+                      addressParts.streetNumber ||
+                      addressParts.postalCode ||
+                      addressParts.city) && (
                       <>
                         <span className="text-muted-foreground">Adresse</span>
                         <span className="font-medium text-foreground">
-                          {formData.clientAddress}
+                          {[
+                            addressParts.street,
+                            addressParts.streetNumber,
+                            addressParts.postalCode,
+                            addressParts.city,
+                          ]
+                            .filter(Boolean)
+                            .join(', ')}
                         </span>
                       </>
                     )}

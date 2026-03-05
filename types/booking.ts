@@ -3,7 +3,12 @@ export interface BookingFormData {
   clientLastName: string;
   clientEmail: string;
   clientPhone: string;
-  clientAddress?: string;
+  clientAddress?: {
+    street: string;
+    streetNumber: string;
+    postalCode: string;
+    city: string;
+  };
   startDate: Date;
   duration: number;
   title: string;
