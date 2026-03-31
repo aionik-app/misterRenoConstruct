@@ -75,7 +75,6 @@ export default function HomePage() {
         <Testimonials config={config} />
         <Pricing config={config} />
         <Gallery config={config} />
-        <Contact config={config} />
         {config.booking?.enabled && (
           <section id="booking">
             <BookingForm config={config.booking} />

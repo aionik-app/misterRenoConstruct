@@ -102,7 +102,7 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
 
 					<div className="mt-6 p-4 bg-muted/50 rounded-lg">
 						<p className="text-sm text-muted-foreground text-center">
-							<strong>Code par défaut:</strong> JARDIN2024
+							<strong>Code par défaut:</strong> JARDIN2026
 						</p>
 						<p className="text-xs text-muted-foreground text-center mt-2">
 							Changez ce code après votre première connexion

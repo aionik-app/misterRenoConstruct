@@ -81,10 +81,10 @@ export function DateTimePicker({
         {/* Calendar */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Calendar className="h-4 w-4 text-primary" />
+            <div className="w-8 h-8 rounded-lg bg-[#86bc42]/10 flex items-center justify-center">
+              <Calendar className="h-4 w-4 text-[#86bc42]" />
             </div>
-            <h3 className="font-semibold text-foreground">Choisissez une date</h3>
+            <h3 className="font-semibold text-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>Choisissez une date</h3>
           </div>
           <div className="flex justify-center lg:justify-start">
             <DayPicker
@@ -96,27 +96,33 @@ export function DateTimePicker({
               endMonth={addMonths(new Date(), 3)}
               locale={fr}
               classNames={{
-                root: `${defaultClassNames.root} rounded-xl border border-border bg-card p-4 shadow-sm`,
+                root: `${defaultClassNames.root} rounded-xl border border-white/10 p-4 shadow-sm`,
                 months: `${defaultClassNames.months}`,
                 month_caption: 'flex justify-center items-center py-2',
-                caption_label: 'text-base font-semibold text-foreground capitalize',
+                caption_label: 'text-base font-semibold text-white capitalize',
                 nav: `${defaultClassNames.nav}`,
-                button_previous: `${defaultClassNames.button_previous} rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground`,
-                button_next: `${defaultClassNames.button_next} rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground`,
-                chevron: `${defaultClassNames.chevron} fill-current`,
+                button_previous: `${defaultClassNames.button_previous} rounded-lg hover:bg-white/5 transition-colors text-white/40 hover:text-white`,
+                button_next: `${defaultClassNames.button_next} rounded-lg hover:bg-white/5 transition-colors text-white/40 hover:text-white`,
+                chevron: 'fill-white',
                 weekdays: 'flex',
                 weekday:
-                  'w-10 h-10 flex items-center justify-center text-xs font-semibold text-muted-foreground uppercase',
+                  'w-10 h-10 flex items-center justify-center text-xs font-semibold text-white/60 uppercase',
                 week: 'flex',
                 day: 'w-10 h-10 flex items-center justify-center',
                 day_button:
-                  'w-9 h-9 rounded-lg text-sm font-medium transition-all hover:bg-primary/10 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30',
-                selected: 'bg-primary text-primary-foreground rounded-lg hover:bg-primary/90',
-                today: 'font-bold text-primary',
-                outside: 'text-muted-foreground/40',
+                  'w-9 h-9 rounded-lg text-sm font-medium transition-all hover:bg-[#86bc42]/20 hover:text-[#b8d97f] focus:outline-none focus:ring-2 focus:ring-[#86bc42]/30 text-white',
+                selected: 'bg-[#86bc42] text-[#0c1a08] rounded-lg hover:bg-[#86bc42]/90 font-bold',
+                today: 'font-bold text-[#b8d97f] bg-[#86bc42]/20',
+                outside: 'text-white/20',
                 disabled:
-                  'text-muted-foreground/25 cursor-not-allowed hover:bg-transparent hover:text-muted-foreground/25',
+                  'text-white/10 cursor-not-allowed hover:bg-transparent hover:text-white/10',
                 hidden: 'invisible',
+              }}
+              styles={{
+                root: {
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                },
               }}
             />
           </div>
@@ -126,18 +132,18 @@ export function DateTimePicker({
         {selectedDate && (
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Clock className="h-4 w-4 text-primary" />
+              <div className="w-8 h-8 rounded-lg bg-[#86bc42]/10 flex items-center justify-center">
+                <Clock className="h-4 w-4 text-[#86bc42]" />
               </div>
-              <h3 className="font-semibold text-foreground">Choisissez un créneau</h3>
+              <h3 className="font-semibold text-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>Choisissez un créneau</h3>
               {checkingAvailability && (
-                <span className="flex items-center gap-1.5 text-xs text-muted-foreground ml-auto">
+                <span className="flex items-center gap-1.5 text-xs text-white/40 ml-auto">
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
                   Vérification…
                 </span>
               )}
               {!checkingAvailability && slotAvailability && (
-                <span className="text-xs text-muted-foreground ml-auto">
+                <span className="text-xs text-white/40 ml-auto">
                   {Object.values(slotAvailability).filter(Boolean).length} créneau
                   {Object.values(slotAvailability).filter(Boolean).length !== 1 ? 'x' : ''}{' '}
                   disponible
@@ -146,7 +152,9 @@ export function DateTimePicker({
               )}
             </div>
 
-            <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
+            <div className="rounded-xl border border-white/10 p-4 shadow-sm"
+              style={{ background: 'rgba(255,255,255,0.03)' }}
+            >
               <div className="space-y-5 max-h-[360px] overflow-y-auto pr-1">
                 {checkingAvailability ? (
                   <div className="space-y-3">
@@ -160,7 +168,7 @@ export function DateTimePicker({
                           <div
                             // biome-ignore lint/suspicious/noArrayIndexKey: skeleton placeholders
                             key={j}
-                            className="h-10 rounded-lg bg-muted animate-pulse"
+                            className="h-10 rounded-lg bg-white/5 animate-pulse"
                           />
                         ))}
                       </div>
@@ -170,7 +178,9 @@ export function DateTimePicker({
                   <>
                     {morningSlots.length > 0 && (
                       <div>
-                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+                        <p className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3 flex items-center gap-2"
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        >
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                           Matin
                         </p>
@@ -186,13 +196,14 @@ export function DateTimePicker({
                                 onClick={() => available && handleTimeChange(slot)}
                                 disabled={!available}
                                 title={available ? undefined : 'Créneau déjà réservé'}
-                                className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 ${
+                                className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-[#86bc42]/30 ${
                                   !available
-                                    ? 'bg-muted/40 border-border text-muted-foreground/40 line-through cursor-not-allowed'
+                                    ? 'bg-white/5 border-white/5 text-white/15 line-through cursor-not-allowed'
                                     : isSelected
-                                      ? 'bg-primary text-primary-foreground border-primary shadow-sm scale-[1.02]'
-                                      : 'bg-background border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
+                                      ? 'bg-[#86bc42] text-[#0c1a08] border-[#86bc42] shadow-sm scale-[1.02]'
+                                      : 'bg-transparent border-white/10 hover:border-[#86bc42]/40 hover:bg-[#86bc42]/10 hover:text-[#86bc42]'
                                 }`}
+                                style={{ fontFamily: "'DM Sans', sans-serif" }}
                               >
                                 {formatTime(slot)}
                               </button>
@@ -204,7 +215,9 @@ export function DateTimePicker({
 
                     {afternoonSlots.length > 0 && (
                       <div>
-                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
+                        <p className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3 flex items-center gap-2"
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        >
                           <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                           Après-midi
                         </p>
@@ -220,13 +233,14 @@ export function DateTimePicker({
                                 onClick={() => available && handleTimeChange(slot)}
                                 disabled={!available}
                                 title={available ? undefined : 'Créneau déjà réservé'}
-                                className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-primary/30 ${
+                                className={`px-3 py-2.5 rounded-lg border text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-[#86bc42]/30 ${
                                   !available
-                                    ? 'bg-muted/40 border-border text-muted-foreground/40 line-through cursor-not-allowed'
+                                    ? 'bg-white/5 border-white/5 text-white/15 line-through cursor-not-allowed'
                                     : isSelected
-                                      ? 'bg-primary text-primary-foreground border-primary shadow-sm scale-[1.02]'
-                                      : 'bg-background border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary'
+                                      ? 'bg-[#86bc42] text-[#0c1a08] border-[#86bc42] shadow-sm scale-[1.02]'
+                                      : 'bg-transparent border-white/10 hover:border-[#86bc42]/40 hover:bg-[#86bc42]/10 hover:text-[#86bc42]'
                                 }`}
+                                style={{ fontFamily: "'DM Sans', sans-serif" }}
                               >
                                 {formatTime(slot)}
                               </button>
@@ -237,7 +251,9 @@ export function DateTimePicker({
                     )}
 
                     {timeSlots.length === 0 && (
-                      <div className="text-center py-10 text-muted-foreground text-sm">
+                      <div className="text-center py-10 text-white/40 text-sm"
+                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                      >
                         Aucun créneau disponible pour cette date.
                       </div>
                     )}
@@ -245,19 +261,23 @@ export function DateTimePicker({
                     {timeSlots.length > 0 &&
                       slotAvailability &&
                       Object.values(slotAvailability).every((v) => !v) && (
-                        <div className="text-center py-4 text-sm text-muted-foreground bg-muted/30 rounded-lg border border-dashed border-border">
+                        <div className="text-center py-4 text-sm text-white/40 bg-white/5 rounded-lg border border-dashed border-white/10"
+                          style={{ fontFamily: "'DM Sans', sans-serif" }}
+                        >
                           Tous les créneaux sont réservés pour cette journée.
                         </div>
                       )}
 
                     {slotAvailability && (
-                      <div className="flex items-center gap-4 pt-2 border-t border-border text-xs text-muted-foreground">
+                      <div className="flex items-center gap-4 pt-2 border-t border-white/10 text-xs text-white/40"
+                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                      >
                         <span className="flex items-center gap-1.5">
-                          <span className="w-3 h-3 rounded bg-primary/20 border border-primary/40 inline-block" />
+                          <span className="w-3 h-3 rounded bg-[#86bc42]/20 border border-[#86bc42]/40 inline-block" />
                           Disponible
                         </span>
                         <span className="flex items-center gap-1.5">
-                          <span className="w-3 h-3 rounded bg-muted/40 border border-border inline-block" />
+                          <span className="w-3 h-3 rounded bg-white/5 border border-white/10 inline-block" />
                           Réservé
                         </span>
                       </div>
@@ -271,9 +291,9 @@ export function DateTimePicker({
 
         {!selectedDate && (
           <div className="flex-1 flex items-center justify-center min-w-0">
-            <div className="text-center py-10 px-6 rounded-xl border border-dashed border-border bg-muted/20">
-              <Clock className="h-10 w-10 text-muted-foreground/30 mx-auto mb-3" />
-              <p className="text-sm text-muted-foreground">
+            <div className="text-center py-10 px-6 rounded-xl border border-dashed border-white/10 bg-white/5">
+              <Clock className="h-10 w-10 text-white/20 mx-auto mb-3" />
+              <p className="text-sm text-white/40" style={{ fontFamily: "'DM Sans', sans-serif" }}>
                 Sélectionnez une date pour afficher les créneaux disponibles
               </p>
             </div>

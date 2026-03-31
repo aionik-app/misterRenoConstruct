@@ -1,166 +1,372 @@
-import { ArrowRight, Award, Leaf, Users } from 'lucide-react';
+'use client';
+
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  AnimatePresence,
+} from 'framer-motion';
+import {
+  ArrowRight,
+  Award,
+  CheckCircle,
+  ThumbsUp,
+  Leaf,
+  Trees,
+  MapPin,
+} from 'lucide-react';
 import Image from 'next/image';
-import { useId } from 'react';
+import { useId, useRef, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import type { SiteConfig } from '@/types/site-config';
 
-/*
-variants_usage:
-  split_classic: 1
-  split_inverse: 1
-  background_full_center: 1
-  background_full_left: 1
-  background_full_right: 1
-  glass_center: 1
-  glass_split: 1
-  centered_minimal: 1
-  banner_large: 1
-  banner_inverted: 1
-  gradient_background: 1
-  pattern_background: 1
-  video_background: 0
-  overlay_transparent: 1
-  circle_image: 1
-  cards_grid: 1
-  sidebar: 0
-  multi_stage: 0
-  asymetric: 0
-  carousel: 0
-  diagonal_split: 1
-  clip_path: 0
-current_variant: diagonal_split
-*/
+const IconMap: Record<string, React.ElementType> = {
+  award: Award,
+  'check-circle': CheckCircle,
+  'thumbs-up': ThumbsUp,
+  leaf: Leaf,
+};
 
 interface HeroProps {
   config: SiteConfig;
 }
 
+// Floating leaf particle
+function FloatingLeaf({ delay, x, duration }: { delay: number; x: number; duration: number }) {
+  return (
+    <motion.div
+      className="absolute top-0 pointer-events-none"
+      style={{ left: `${x}%` }}
+      initial={{ y: -60, opacity: 0, rotate: -20 }}
+      animate={{
+        y: '110vh',
+        opacity: [0, 0.6, 0.6, 0],
+        rotate: ['-20deg', '40deg', '-10deg', '30deg'],
+        x: [0, 30, -20, 15, 0],
+      }}
+      transition={{
+        duration,
+        delay,
+        repeat: Infinity,
+        ease: 'linear',
+      }}
+    >
+      <Leaf className="h-4 w-4 text-green-400/40" />
+    </motion.div>
+  );
+}
+
+// Animated counter
+function Counter({ value, suffix = '' }: { value: string; suffix?: string }) {
+  const num = parseInt(value.replace(/\D/g, ''), 10);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (!isInView || isNaN(num)) return;
+    let start = 0;
+    const step = num / 40;
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= num) {
+        setDisplay(num);
+        clearInterval(timer);
+      } else {
+        setDisplay(Math.floor(start));
+      }
+    }, 30);
+    return () => clearInterval(timer);
+  }, [isInView, num]);
+
+  if (isNaN(num)) return <span ref={ref}>{value}</span>;
+  return (
+    <span ref={ref}>
+      {display}
+      {value.replace(/[\d]/g, '')}
+    </span>
+  );
+}
+
 export function Hero({ config }: HeroProps) {
   const headingId = useId();
+  const containerRef = useRef<HTMLElement>(null);
+
+  const { scrollY } = useScroll();
+  const bgY = useTransform(scrollY, [0, 600], ['0%', '25%']);
+  const overlayOpacity = useTransform(scrollY, [0, 400], [0.45, 0.7]);
+  const contentY = useTransform(scrollY, [0, 400], ['0%', '8%']);
+
+  const leaves = [
+    { delay: 0, x: 10, duration: 12 },
+    { delay: 3, x: 25, duration: 16 },
+    { delay: 6, x: 45, duration: 14 },
+    { delay: 1.5, x: 65, duration: 18 },
+    { delay: 8, x: 80, duration: 11 },
+    { delay: 4, x: 90, duration: 15 },
+  ];
+
+  /* ─── Animation variants ─── */
+  const containerVariants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
+  };
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  };
+
+  const fadeLeft = {
+    hidden: { opacity: 0, x: -30 },
+    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  };
+
+  const scaleIn = {
+    hidden: { opacity: 0, scale: 0.85 },
+    show: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  };
+
+  const lineGrow = {
+    hidden: { scaleX: 0, originX: 0 },
+    show: { scaleX: 1, transition: { duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  };
+
   return (
     <section
+      ref={containerRef}
       id={`hero-${headingId}`}
-      aria-label="Hero section"
       aria-labelledby={`hero-heading-${headingId}`}
-      className="relative bg-background overflow-hidden"
+      className="relative flex items-center min-h-screen h-auto max-h-screen overflow-hidden"
+      style={{ fontFamily: "'Cormorant Garamond', serif" }}
     >
-      {/* Variant: Diagonal Split */}
-      {/* Mobile background (full) */}
-      <div className="absolute inset-0 z-0 md:hidden">
+      {/* ── Parallax Background ── */}
+      <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
         <Image
-          src={
-            config.hero.backgroundImage || '/placeholder.svg?height=1200&width=1200&query=garden'
-          }
-          alt="Paysage de jardin verdoyant au lever du soleil"
+          src={config.hero.backgroundImage || '/placeholder.svg?height=1200&width=1920&query=lush+garden+brussels'}
+          alt="Jardin aménagé à Bruxelles"
           fill
           priority
-          className="object-cover"
+          className="object-cover scale-110"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-background/60" />
+      </motion.div>
+
+      {/* ── Overlay gradient ── */}
+      <motion.div
+        className="absolute inset-0 z-[1]"
+        style={{ opacity: overlayOpacity }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0f1f0a]/90 via-[#0f1f0a]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f1f0a]/70 via-transparent to-transparent" />
+      </motion.div>
+
+      {/* ── Texture grain overlay ── */}
+      <div
+        className="absolute inset-0 z-[2] opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '128px',
+        }}
+      />
+
+      {/* ── Floating leaves ── */}
+      <div className="absolute inset-0 z-[3] overflow-hidden pointer-events-none">
+        {leaves.map((l, i) => (
+          <FloatingLeaf key={i} {...l} />
+        ))}
       </div>
 
-      {/* Desktop background (diagonal on the right) */}
-      <div className="absolute inset-y-0 right-0 hidden w-[62%] md:block z-0">
-        <div
-          className="relative h-full w-full"
-          style={{ clipPath: 'polygon(14% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
-          aria-hidden
+      {/* ── Decorative vertical line ── */}
+      <motion.div
+        className="absolute left-[calc(50%-1px)] top-0 bottom-0 z-[3] hidden lg:block"
+        style={{
+          background: 'linear-gradient(to bottom, transparent, rgba(134,188,66,0.15), transparent)',
+          width: 1,
+        }}
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 1 }}
+        transition={{ duration: 1.5, delay: 1, ease: 'easeInOut' }}
+      />
+
+      {/* ── Main content ── */}
+      <motion.div
+        className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-12 py-8 sm:py-10"
+        style={{ y: contentY }}
+      >
+        <motion.div
+          className="max-w-3xl"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
         >
-          <Image
-            src={
-              config.hero.backgroundImage || '/placeholder.svg?height=1600&width=1200&query=garden'
-            }
-            alt="Vue diagonale d\'un jardin luxuriant"
-            fill
-            priority
-            className="object-cover"
-            sizes="(min-width: 1024px) 60vw, 100vw"
+          {/* Location badge */}
+          <motion.div variants={fadeLeft} className="mb-3 sm:mb-4">
+            <span
+              className="inline-flex items-center gap-1.5 text-[#a8c97f] text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase"
+              style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.2em' }}
+            >
+              <MapPin className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+              <span className="hidden xs:inline">Bruxelles & environs</span>
+              <span className="xs:hidden">Bruxelles</span>
+            </span>
+          </motion.div>
+
+          {/* Subtitle pill */}
+          <motion.div variants={fadeLeft} className="mb-3 sm:mb-4">
+            <span
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#86bc42]/15 border border-[#86bc42]/30 text-[#b8d97f] px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-sm backdrop-blur-sm"
+              style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.65rem, 2vw, 0.78rem)', letterSpacing: '0.06em' }}
+            >
+              <Trees className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+              {config.hero.subtitle}
+            </span>
+          </motion.div>
+
+          {/* Heading — split into two lines for drama */}
+          <motion.div variants={fadeUp} className="mb-2 overflow-hidden">
+            <h1
+              id={`hero-heading-${headingId}`}
+              className="font-bold text-white leading-[1.05] sm:leading-[1.0]"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: 'clamp(2rem, 8vw, 5.2rem)',
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+              }}
+            >
+              {config.hero.title}
+            </h1>
+          </motion.div>
+
+          {/* Animated underline accent */}
+          <motion.div
+            className="h-[2px] sm:h-[3px] w-16 sm:w-24 bg-gradient-to-r from-[#86bc42] to-[#b8d97f] rounded-full mb-4 sm:mb-5"
+            variants={lineGrow}
           />
-          {/* Overlay to ensure contrast */}
-          <div className="absolute inset-0 bg-background/40" />
-        </div>
-      </div>
 
-      <div className="relative z-10 min-h-screen pt-24 sm:pt-32 lg:pt-40 pb-16 sm:pb-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-full">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Left: Content */}
-            <div className="md:col-span-7 flex flex-col items-center md:items-start text-center md:text-left gap-6 sm:gap-8">
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
-                <Leaf className="h-4 w-4" />
-                {config.hero.subtitle}
-              </div>
+          {/* Description */}
+          <motion.p
+            variants={fadeUp}
+            className="text-white/70 leading-relaxed mb-6 sm:mb-7 max-w-xl"
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(0.9rem, 2.5vw, 1.15rem)',
+              fontWeight: 300,
+            }}
+          >
+            {config.hero.description}
+          </motion.p>
 
-              <div className="w-full max-w-3xl">
-                <h1
-                  id={`hero-heading-${headingId}`}
-                  className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-tight break-words"
+          {/* CTAs */}
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
+            {/* Primary CTA */}
+            <motion.a
+              href={config.hero.ctaLink}
+              aria-label={config.hero.ctaText}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm font-semibold text-[#0f1f0a]"
+              style={{
+                background: 'linear-gradient(135deg, #86bc42 0%, #b8d97f 100%)',
+                fontFamily: "'DM Sans', sans-serif",
+                letterSpacing: '0.04em',
+              }}
+            >
+              {/* Shimmer */}
+              <motion.span
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-12"
+                animate={{ translateX: ['−100%', '200%'] }}
+                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 3 }}
+              />
+              {config.hero.ctaText}
+              <motion.span
+                className="inline-flex"
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              </motion.span>
+            </motion.a>
+
+            {/* Secondary CTA */}
+            <motion.a
+              href="#services"
+              whileHover={{ scale: 1.03, backgroundColor: 'rgba(255,255,255,0.08)' }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm font-medium text-white/80 backdrop-blur-sm transition-colors"
+              style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.04em' }}
+            >
+              Nos services
+            </motion.a>
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-wrap gap-x-6 gap-y-4 sm:gap-x-10 sm:gap-y-6"
+          >
+            {config.hero.stats?.map((stat, i) => {
+              const IconComponent = IconMap[stat.icon] || Leaf;
+              return (
+                <motion.div
+                  key={stat.id}
+                  className="flex items-center gap-2 sm:gap-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 + i * 0.15, duration: 0.5 }}
                 >
-                  {config.hero.title}
-                </h1>
-                <p className="mt-4 text-xl sm:text-2xl text-muted-foreground leading-relaxed break-words">
-                  {config.hero.description}
-                </p>
-              </div>
+                  {/* Icon bubble */}
+                  <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-[#86bc42]/15 border border-[#86bc42]/20">
+                    <IconComponent className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#a8c97f]" />
+                  </div>
+                  <div className="flex flex-col leading-none">
+                    <span
+                      className="text-white font-bold text-lg sm:text-xl"
+                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                    >
+                      <Counter value={stat.value} />
+                    </span>
+                    <span
+                      className="text-white/50 text-[10px] sm:text-xs mt-0.5 sm:mt-1"
+                      style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.05em' }}
+                    >
+                      {stat.label}
+                    </span>
+                  </div>
+                  {/* Vertical separator */}
+                  {i < (config.hero.stats?.length ?? 0) - 1 && (
+                    <div className="hidden sm:block w-px h-8 sm:h-10 bg-white/10 ml-2 sm:ml-4" />
+                  )}
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </motion.div>
+      </motion.div>
 
-              <div className="mt-2 sm:mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-5">
-                <Button size="lg" className="rounded-full text-lg px-8">
-                  <a
-                    href={config.hero.ctaLink}
-                    aria-label={config.hero.ctaText}
-                    className="flex items-center justify-center gap-2"
-                  >
-                    {config.hero.ctaText}
-                    <ArrowRight className="h-5 w-5" />
-                  </a>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full text-lg px-8 bg-transparent"
-                >
-                  <a href="#services">Découvrir nos services</a>
-                </Button>
-              </div>
-
-              {/* Stats row */}
-              <div className="mt-6 grid grid-cols-3 gap-4 sm:gap-6 w-full max-w-xl">
-                <div className="flex items-center gap-3 rounded-xl bg-background/70 backdrop-blur px-4 py-3 ring-1 ring-primary/10">
-                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full">
-                    <Award className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <div className="text-base font-semibold text-foreground">25+</div>
-                    <div className="text-xs text-muted-foreground">Années</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 rounded-xl bg-background/70 backdrop-blur px-4 py-3 ring-1 ring-primary/10">
-                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full">
-                    <Users className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <div className="text-base font-semibold text-foreground">500+</div>
-                    <div className="text-xs text-muted-foreground">Clients</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 rounded-xl bg-background/70 backdrop-blur px-4 py-3 ring-1 ring-primary/10">
-                  <div className="flex items-center justify-center w-10 h-10 bg-primary/10 rounded-full">
-                    <Leaf className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <div className="text-base font-semibold text-foreground">100%</div>
-                    <div className="text-xs text-muted-foreground">Bio</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Spacer to align with diagonal image */}
-            <div className="hidden md:block md:col-span-5" aria-hidden />
-          </div>
-        </div>
-      </div>
+      {/* ── Scroll indicator ── */}
+      <motion.div
+        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 sm:gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 0.8 }}
+      >
+        <span
+          className="text-white/30 text-[9px] sm:text-xs tracking-widest uppercase"
+          style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.5rem, 1.5vw, 0.65rem)' }}
+        >
+          Défiler
+        </span>
+        <motion.div
+          className="w-px h-8 sm:h-12 bg-gradient-to-b from-[#86bc42]/60 to-transparent"
+          animate={{ scaleY: [1, 0.4, 1], opacity: [0.7, 0.2, 0.7] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ transformOrigin: 'top' }}
+        />
+      </motion.div>
     </section>
   );
 }

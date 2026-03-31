@@ -208,16 +208,52 @@ export function BookingForm({ config }: BookingFormProps) {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-16 sm:py-24">
+    <section
+      id="booking"
+      className="py-24 relative overflow-hidden"
+      style={{ background: '#0c1a08' }}
+    >
+      {/* Subtle grid texture */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(rgba(134,188,66,1) 1px, transparent 1px), linear-gradient(90deg, rgba(134,188,66,1) 1px, transparent 1px)`,
+          backgroundSize: '60px 60px',
+        }}
+      />
+
+      <div className="relative max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
       <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+        <div
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6"
+          style={{
+            background: 'rgba(134,188,66,0.15)',
+            border: '1px solid rgba(134,188,66,0.3)',
+            color: '#b8d97f',
+            fontFamily: "'DM Sans', sans-serif",
+            letterSpacing: '0.04em',
+          }}
+        >
           <CalendarCheck className="h-4 w-4" />
           Réservation en ligne
         </div>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+        <h2
+          className="text-white font-bold mb-4"
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: 'clamp(2.4rem, 4.5vw, 4rem)',
+            letterSpacing: '-0.02em',
+          }}
+        >
           Prendre rendez-vous
         </h2>
-        <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+        <div
+          className="h-[2px] w-20 bg-gradient-to-r from-[#86bc42] to-[#b8d97f] rounded-full mx-auto mb-6"
+        />
+        <p
+          className="text-white/50 max-w-xl mx-auto"
+          style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '1rem', fontWeight: 300 }}
+        >
           Réservez un créneau directement en ligne. Nous vous confirmerons votre rendez-vous par
           email.
         </p>
@@ -233,17 +269,18 @@ export function BookingForm({ config }: BookingFormProps) {
               <div key={s.key} className="flex items-center gap-2">
                 {i > 0 && (
                   <div
-                    className={`hidden sm:block w-12 h-px ${isDone ? 'bg-primary' : 'bg-border'}`}
+                    className={`hidden sm:block w-12 h-px ${isDone ? 'bg-[#86bc42]' : 'bg-white/10'}`}
                   />
                 )}
                 <div
-                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-primary text-primary-foreground'
+                      ? 'bg-[#86bc42] text-[#0c1a08]'
                       : isDone
-                        ? 'bg-primary/10 text-primary'
-                        : 'bg-muted text-muted-foreground'
+                        ? 'bg-[#86bc42]/15 text-[#86bc42] border border-[#86bc42]/30'
+                        : 'bg-white/5 text-white/40'
                   }`}
+                  style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.04em' }}
                 >
                   <StepIcon className="h-4 w-4" />
                   <span className="hidden sm:inline">{s.label}</span>
@@ -255,7 +292,14 @@ export function BookingForm({ config }: BookingFormProps) {
         </div>
       )}
 
-      <Card className="border-0 shadow-lg">
+      <Card
+        className="border-0 shadow-lg"
+        style={{
+          background: 'rgba(255,255,255,0.03)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          backdropFilter: 'blur(10px)',
+        }}
+      >
         <CardContent className="p-6 sm:p-8">
           {error && (
             <Alert ref={errorRef} variant="destructive" className="mb-6">
@@ -685,6 +729,7 @@ export function BookingForm({ config }: BookingFormProps) {
           )}
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </section>
   );
 }

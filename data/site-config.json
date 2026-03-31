@@ -1,236 +1,239 @@
 {
   "version": "v1",
   "metadata": {
-    "title": "Rubini Garden",
-    "description": "Entreprise familiale de jardinage à Wezembeek — professionnelle et souriante.",
+    "title": "JS Landscape",
+    "description": "Votre expert en création, aménagement et entretien de jardins et espaces extérieurs.",
     "keywords": [
-      "jardinage",
-      "tonte pelouse",
-      "terrasse bois",
       "aménagement extérieur",
-      "plantation",
-      "gazon",
-      "klinkers",
-      "dalle romaine"
+      "création de jardin",
+      "entretien jardin",
+      "pavage",
+      "dallage",
+      "terrasse bois",
+      "clôtures",
+      "élagage",
+      "abattage",
+      "paysagiste"
     ],
     "faviconUrl": "/favicon.ico"
   },
   "branding": {
-    "companyName": "Rubini Garden",
-    "logo": "https://media.istockphoto.com/id/1317732079/fr/vectoriel/arbre-de-vie-de-contour.jpg?s=612x612&w=0&k=20&c=bDSb0CUB7MQMn_fU9Nr4R8fCQIMyILW8zN_aW2WNxpg=",
+    "companyName": "",
+    "logo": "/logo_Julian_Stouffs_Landscape_main.png",
     "favicon": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=32&h=32&fit=crop",
     "logoUrl": "/logo.svg",
-    "slogan": "Votre jardin, notre sourire."
+    "slogan": "L'art de sublimer vos espaces extérieurs."
   },
   "theme": {
     "primary": "#14532d",
     "secondary": "#86efac"
   },
   "contact": {
-    "phone": "+32 470 46 47 48",
-    "email": "contact@rubinigarden.be",
-    "address": "34 Kalestraat, 1970 Wezembeek",
-    "city": "Wezembeek-oppem",
+    "phone": "+32 488 588 752",
+    "email": "js@jslandscape.be",
+    "address": "Heuken, 3 1640 Rhodes-St-Genèse",
+    "city": "Wezembeek-Oppem",
     "postalCode": "1970"
   },
   "hero": {
-    "title": "Transformez votre espace extérieur",
-    "subtitle": "Experts en jardinage depuis 15 ans",
-    "description": "Nous créons et entretenons vos jardins avec passion. Tonte, aménagement, terrasses, plantation - Votre satisfaction est notre priorité.",
+    "title": "Conception, aménagement et entretien de vos espaces verts",
+    "subtitle": "Votre partenaire paysagiste de confiance",
+    "description": "De la création complète à l'entretien régulier, nous mettons notre savoir-faire à votre service pour réaliser le jardin de vos rêves. Pavage, terrasses, plantations et aménagements sur mesure.",
     "backgroundImage": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
-    "ctaText": "Devis Gratuit",
+    "ctaText": "Demander un devis gratuit",
     "ctaLink": "#contact",
-    "headline": "Rubini Garden",
-    "subheadline": "Entreprise familiale de jardinage — 8 ouvriers, proximité et professionnalisme.",
-    "ctaLabel": "Demander un devis",
+    "headline": "JS Landscape",
+    "subheadline": "Une équipe de professionnels passionnés pour un résultat à la hauteur de vos exigences.",
+    "ctaLabel": "Contactez-nous",
     "ctaHref": "#contact",
     "backgroundUrl": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
     "stats": [
       {
         "id": "experience",
-        "value": "25+",
-        "label": "Années",
+        "value": "10+",
+        "label": "Années d'expérience",
         "icon": "award"
       },
       {
-        "id": "clients",
-        "value": "500+",
-        "label": "Clients",
-        "icon": "users"
+        "id": "projects",
+        "value": "300+",
+        "label": "Projets réalisés",
+        "icon": "check-circle"
       },
       {
-        "id": "organic",
+        "id": "satisfaction",
         "value": "100%",
-        "label": "Bio",
-        "icon": "leaf"
+        "label": "Sur mesure",
+        "icon": "thumbs-up"
       }
     ]
   },
   "services": [
     {
-      "id": "tonte-pelouse",
-      "title": "Tonte de Pelouse",
-      "description": "Entretien régulier de votre pelouse pour un gazon parfait toute l'année. Service hebdomadaire ou mensuel selon vos besoins.",
+      "id": "entretien-espaces-verts",
+      "title": "Entretien de Jardins",
+      "description": "Des contrats d'entretien adaptés à vos besoins : tonte de pelouse, taille de haies, élagage, abattage et ramassage de feuilles pour un jardin impeccable en toute saison.",
       "image": "https://lh3.googleusercontent.com/pw/AP1GczO2Id5UjBvFN2iYcft1ox017od19ZGCVhidB5jaJsgj1IJo88i840YhDljBW1EkLtGQPHw0Cui6OxUHVbfpS0gFYgnCfpsh9bGcG-oEPu54eU4LjShBGwlckF1a-9nrTf4i5orsXSIMlEckuXVQuAwI=w1167-h778-s-no-gm?authuser=0",
-      "price": "À partir de 35€",
+      "price": "Sur devis",
       "features": [
-        "Tonte professionnelle",
-        "Ramassage des déchets",
-        "Bordures nettes",
-        "Conseils d'entretien"
+        "Tonte et scarification",
+        "Taille et élagage",
+        "Contrats annuels ou ponctuels",
+        "Évacuation des déchets verts"
       ],
       "icon": "🌱"
     },
     {
-      "id": "mauvaises-herbes",
-      "title": "Désherbage",
-      "description": "Élimination efficace des mauvaises herbes pour préserver la beauté de vos espaces verts.",
+      "id": "creation-amenagement",
+      "title": "Création & Aménagement",
+      "description": "Nous repensons vos espaces extérieurs de A à Z : conception de plans, plantation de massifs, engazonnement (semis ou rouleaux) et petite maçonnerie paysagère.",
       "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
-      "price": "À partir de 25€",
+      "price": "Sur devis",
       "features": [
-        "Désherbage manuel",
-        "Traitement écologique",
-        "Prévention repousse",
-        "Respect de l'environnement"
+        "Étude et conception",
+        "Choix des végétaux",
+        "Pose de gazon",
+        "Aménagements sur mesure"
       ],
       "icon": "🌿"
     },
     {
-      "id": "terrasse-bois",
-      "title": "Terrasses en Bois",
-      "description": "Création de terrasses en bois sur mesure pour sublimer votre espace extérieur.",
+      "id": "pavage-terrasses",
+      "title": "Pavage, Dallage & Terrasses",
+      "description": "Réalisation de vos allées, parkings et terrasses. Nous travaillons avec divers matériaux : clinkers, pierre naturelle, bois, composite et dalles en béton.",
       "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
       "price": "Sur devis",
       "features": [
-        "Bois de qualité",
-        "Design personnalisé",
-        "Installation professionnelle",
-        "Garantie 5 ans"
+        "Terrasses en bois ou composite",
+        "Allées et entrées de garage",
+        "Pose de clinkers et pierres naturelles",
+        "Finitions soignées"
       ],
       "icon": "🪵"
     }
   ],
   "about": {
-    "title": "Notre Expertise à Votre Service",
-    "description": "Avec plus de 45 ans d'expérience dans l'aménagement paysager, notre équipe de professionnels passionnés transforme vos espaces extérieurs en véritables havres de paix. Nous combinons savoir-faire traditionnel et techniques modernes pour des résultats exceptionnels.",
+    "title": "Notre Savoir-Faire Paysager",
+    "description": "JS Landscape est une entreprise spécialisée dans l'aménagement et l'entretien de vos espaces extérieurs. Animés par la passion du travail bien fait, nous accompagnons les particuliers et les professionnels dans la concrétisation de leurs projets. Notre équipe qualifiée vous garantit un service professionnel, des finitions impeccables et un profond respect de l'environnement, quels que soient l'envergure et la complexité de votre aménagement.",
     "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
     "features": []
   },
   "gallery": {
-    "title": "Nos Réalisations",
+    "title": "Nos Dernières Réalisations",
     "images": [
       {
         "id": "1",
         "url": "https://blog.techo-bloc.com/hubfs/2022-CA118-Showcase-RAP06636-HDR.jpg",
-        "alt": "Aménagement jardin moderne",
+        "alt": "Aménagement jardin moderne et pavage",
         "category": "amenagement",
-        "title": "Jardin Moderne"
+        "title": "Aménagement Global"
       },
       {
         "id": "2",
         "url": "https://decks-docks.com/wp-content/uploads/2017/08/Floating-Deck.jpg",
-        "alt": "Terrasse en bois exotique",
+        "alt": "Création de terrasse sur mesure",
         "category": "terrasse",
-        "title": "Terrasse Bois"
+        "title": "Terrasse et Decking"
       },
       {
         "id": "3",
         "url": "https://www.southgateco.com/wp-content/uploads/2021/09/How-to-Give-Your-New-Backyard-a-Unique-Look.jpg",
-        "alt": "Pelouse parfaitement entretenue",
-        "category": "tonte",
-        "title": "Pelouse Parfaite"
+        "alt": "Entretien d'espaces verts et pelouse",
+        "category": "entretien",
+        "title": "Entretien de Pelouse"
       },
       {
         "id": "4",
         "url": "https://www.willemsefrance.fr/cdn/shop/articles/banniere_Comment_creer_un_magnifique_massif_de_fleurs_vivaces_dans_votre_jardin4_YZ_1dca2564-dbe6-439d-ab47-928ddf90a246.jpg?v=1747037864",
-        "alt": "Plantation de massifs colorés",
+        "alt": "Création de massifs de fleurs",
         "category": "plantation",
-        "title": "Massifs Colorés"
+        "title": "Plantations et Massifs"
       }
     ],
     "categories": [
       "Aménagement",
       "Terrasses",
-      "Pelouse",
-      "Plantation"
+      "Entretien",
+      "Plantation",
+      "Pavage"
     ]
   },
   "testimonials": {
     "enabled": true,
-    "title": "Ce Que Disent Nos Clients",
-    "subtitle": "Découvrez les témoignages de nos clients satisfaits",
+    "title": "L'Avis de Nos Clients",
+    "subtitle": "La satisfaction de nos clients est notre plus belle carte de visite.",
     "items": [
       {
         "id": "t1",
-        "name": "Marie Dupont",
-        "role": "Propriétaire à Wezembeek",
-        "content": "Un travail remarquable ! Mon jardin n'a jamais été aussi beau. L'équipe est ponctuelle, soignée et très professionnelle.",
+        "name": "Laurent D.",
+        "role": "Client Particulier",
+        "content": "Superbe travail pour le pavage de notre allée et la création de notre nouvelle terrasse. Une équipe à l'écoute, ponctuelle et très soignée dans les finitions.",
         "rating": 5
       },
       {
         "id": "t2",
-        "name": "Pierre Lambert",
-        "role": "Villa à Tervuren",
-        "content": "Rubini Garden a complètement transformé notre terrasse. Le résultat dépasse nos attentes. Je recommande vivement !",
+        "name": "Sophie M.",
+        "role": "Propriétaire de Villa",
+        "content": "Nous avons fait appel à JS Landscape pour l'élagage de grands arbres et la refonte de nos massifs. Le résultat est magnifique et le chantier a été rendu impeccable.",
         "rating": 5
       },
       {
         "id": "t3",
-        "name": "Sophie Janssens",
-        "role": "Résidence à Kraainem",
-        "content": "Service d'entretien régulier impeccable. Ils prennent soin de notre jardin comme si c'était le leur. Très fiable.",
+        "name": "Marc B.",
+        "role": "Gestionnaire de copropriété",
+        "content": "Nous avons un contrat d'entretien annuel pour les espaces verts de notre résidence. Professionnalisme, régularité et toujours de bons conseils.",
         "rating": 4
       }
     ]
   },
   "pricing": {
     "enabled": true,
-    "title": "Nos Tarifs",
-    "subtitle": "Des formules adaptées à chaque besoin et chaque budget",
+    "title": "Nos Services sur Mesure",
+    "subtitle": "Chaque projet est unique. Nous vous proposons un devis détaillé et personnalisé.",
     "tiers": [
       {
         "id": "entretien",
-        "name": "Entretien",
-        "description": "Entretien régulier de votre jardin",
-        "price": "35€",
-        "period": "par passage",
+        "name": "Contrat d'Entretien",
+        "description": "La solution tranquillité pour un jardin toujours parfait.",
+        "price": "Sur devis",
+        "period": "annuel ou ponctuel",
         "features": [
-          "Tonte de pelouse",
-          "Taille des bordures",
-          "Ramassage des déchets",
-          "Conseils personnalisés"
+          "Tonte, scarification et engrais",
+          "Taille des haies et arbustes",
+          "Désherbage et nettoyage",
+          "Évacuation des déchets verts"
         ],
-        "ctaText": "Demander un devis",
+        "ctaText": "Demander une offre",
         "ctaLink": "#contact"
       },
       {
         "id": "amenagement",
-        "name": "Aménagement",
-        "description": "Création et transformation de vos espaces",
+        "name": "Aménagement Extérieur",
+        "description": "Création ou rénovation de vos espaces extérieurs.",
         "price": "Sur devis",
         "features": [
-          "Étude personnalisée",
-          "Plan d'aménagement",
-          "Fourniture des matériaux",
-          "Installation complète",
-          "Garantie 2 ans"
+          "Pavage, dallage et clinkers",
+          "Création de terrasses (bois/composite)",
+          "Pose de clôtures et palissades",
+          "Travaux de terrassement",
+          "Fourniture des matériaux de qualité"
         ],
         "highlighted": true,
-        "ctaText": "Demander un devis",
+        "ctaText": "Parlez-nous de votre projet",
         "ctaLink": "#contact"
       },
       {
         "id": "premium",
-        "name": "Premium",
-        "description": "Service complet clé en main",
+        "name": "Création Paysagère",
+        "description": "Conception complète de votre futur jardin.",
         "price": "Sur devis",
         "features": [
-          "Tout de la formule Aménagement",
-          "Entretien mensuel inclus",
-          "Suivi saisonnier",
-          "Remplacement des plantations",
-          "Support prioritaire",
-          "Conseils d'un paysagiste"
+          "Étude et plans sur mesure",
+          "Choix et plantation des végétaux",
+          "Semis de gazon ou gazon en rouleaux",
+          "Maçonnerie paysagère",
+          "Suivi de chantier",
+          "Conseils d'entretien post-création"
         ],
         "ctaText": "Nous contacter",
         "ctaLink": "#contact"
@@ -238,21 +241,21 @@
     ]
   },
   "footer": {
-    "description": "Votre partenaire de confiance pour tous vos projets d'aménagement extérieur. Contactez-nous pour un devis personnalisé.",
+    "description": "JS Landscape - Votre expert en aménagement extérieur, création de jardins, pavage et entretien. Qualité, rigueur et passion à votre service.",
     "socialLinks": [
       {
         "platform": "Facebook",
-        "url": "https://facebook.com/jardins-espaces-verts",
+        "url": "https://facebook.com",
         "icon": "facebook"
       },
       {
         "platform": "Instagram",
-        "url": "https://instagram.com/jardins_espaces_verts",
+        "url": "https://www.instagram.com/js.landscape/",
         "icon": "instagram"
       },
       {
         "platform": "LinkedIn",
-        "url": "https://linkedin.com/company/jardins-espaces-verts",
+        "url": "https://linkedin.com",
         "icon": "linkedin"
       }
     ],
@@ -266,23 +269,23 @@
         "url": "#about"
       },
       {
-        "title": "Réalisations",
+        "title": "Nos Réalisations",
         "url": "#gallery"
       },
       {
-        "title": "Contact",
+        "title": "Demander un Devis",
         "url": "#contact"
       }
     ]
   },
-  "lastModified": "2026-02-20T11:56:00.764Z",
+  "lastModified": "2026-03-31T16:15:00.000Z",
   "booking": {
     "enabled": true,
     "apiUrl": "Clement@example.com",
     "apiKey": "rg_demo_rubini_garden_booking_key",
     "defaultDuration": 60,
     "workingHours": {
-      "start": "09:00",
+      "start": "08:00",
       "end": "18:00"
     },
     "workingDays": [
@@ -290,7 +293,8 @@
       2,
       3,
       4,
-      5
+      5,
+      6
     ]
   }
 }
