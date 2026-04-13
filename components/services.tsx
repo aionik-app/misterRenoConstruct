@@ -168,13 +168,7 @@ export function Services({ config }: ServicesProps) {
                       <p className="text-slate-500 text-xs sm:text-sm line-clamp-3 mb-4 flex-grow font-light">
                         {service.description}
                       </p>
-                      <motion.a
-                        href="#contact"
-                        className="inline-flex items-center gap-1.5 text-[#e69938] text-xs font-bold uppercase tracking-wider"
-                        whileHover={{ x: 3 }}
-                      >
-                        En savoir plus <ArrowRight className="h-3.5 w-3.5" />
-                      </motion.a>
+
                     </div>
 
                   </div>

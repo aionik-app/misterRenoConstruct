@@ -201,12 +201,7 @@ export function Hero({ config }: HeroProps) {
                 Entreprise Générale du BTP
               </span>
             </div>
-            <div className="flex items-center gap-1.5 text-slate-500 text-[9px] sm:text-[10px] font-medium">
-              <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5 shrink-0" />
-              <span className="tracking-widest uppercase" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                Intervention sur toute la région
-              </span>
-            </div>
+
           </motion.div>
 
           {/* H1 */}

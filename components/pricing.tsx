@@ -108,9 +108,7 @@ export function Pricing({ config }: PricingProps) {
                 {/* Badge "Recommandé" chevauchant la bordure supérieure */}
                 {tier.highlighted && (
                   <div className="absolute top-0 right-6 sm:right-8 -translate-y-1/2 z-20">
-                    <span className="bg-[#e69938] text-white px-3 py-1.5 rounded-md text-[10px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
-                      <Sparkles className="h-3.5 w-3.5" /> Recommandé
-                    </span>
+
                   </div>
                 )}
 

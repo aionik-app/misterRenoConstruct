@@ -223,7 +223,7 @@
           "Pose de VMC simple/double flux",
           "Câblage domotique"
         ],
-        "ctaText": "Consulter nos experts",
+        "ctaText": "Contactez-nous",
         "ctaLink": "#contact"
       },
       {
@@ -239,7 +239,7 @@
           "Carrelage et revêtements de sol"
         ],
         "highlighted": true,
-        "ctaText": "Décrivez votre projet",
+        "ctaText": "Contactez-nous",
         "ctaLink": "#contact"
       },
       {
@@ -254,7 +254,7 @@
           "Intégration technique et raccordements",
           "Suivi de chantier complet"
         ],
-        "ctaText": "Demander une étude",
+        "ctaText": "Contactez-nous",
         "ctaLink": "#contact"
       }
     ]
