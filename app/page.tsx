@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { About } from '@/components/about';
-import { BookingForm } from '@/components/booking/booking-form';
-import { Contact } from '@/components/contact';
+import { ContactSection } from '@/components/booking/booking-form'; // Assurez-vous que le chemin correspond à l'endroit où vous avez mis le composant
 import { Footer } from '@/components/footer';
 import { Gallery } from '@/components/gallery';
 import { Header } from '@/components/header';
@@ -33,7 +32,7 @@ export default function HomePage() {
 
     loadConfig();
 
-    // Throttle à 30s pour éviter les rechargements intempestifs pendant le formulaire de booking
+    // Throttle à 30s pour éviter les rechargements intempestifs
     const handleFocus = () => {
       const now = Date.now();
       if (now - lastFocusReload.current > 30_000) {
@@ -44,29 +43,33 @@ export default function HomePage() {
 
     window.addEventListener('focus', handleFocus);
     return () => window.removeEventListener('focus', handleFocus);
-  }, []);
+  },[]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary" />
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#e69938]" />
       </div>
     );
   }
 
   if (!config) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-destructive mb-4">Erreur de configuration</h1>
-          <p className="text-muted-foreground">Impossible de charger la configuration du site.</p>
+          <h1 className="text-2xl font-bold text-red-500 mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+            Erreur de configuration
+          </h1>
+          <p className="text-slate-500 font-light" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            Impossible de charger la configuration du site.
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
       <Header config={config} />
       <main>
         <Hero config={config} />
@@ -74,12 +77,7 @@ export default function HomePage() {
         <About config={config} />
         <Testimonials config={config} />
         <Pricing config={config} />
-        <Gallery config={config} />
-        {config.booking?.enabled && (
-          <section id="booking">
-            <BookingForm config={config.booking} />
-          </section>
-        )}
+        <ContactSection config={config} />
       </main>
       <Footer config={config} />
     </div>

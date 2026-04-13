@@ -1,248 +1,267 @@
 {
   "version": "v1",
   "metadata": {
-    "title": "JS Landscape",
-    "description": "Votre expert en création, aménagement et entretien de jardins et espaces extérieurs.",
-    "keywords": [
-      "aménagement extérieur",
-      "création de jardin",
-      "entretien jardin",
-      "pavage",
-      "dallage",
-      "terrasse bois",
-      "clôtures",
-      "élagage",
-      "abattage",
-      "paysagiste"
+    "title": "Mister RenoConstruct | Rénovation et Construction Clé en Main",
+    "description": "Artisans experts en construction et rénovation depuis 2013. De la fondation à la finition : gros œuvre, électricité, chauffage, HVAC et carrelage. Patron sur chantier.",
+    "keywords":[
+      "entreprise de construction",
+      "rénovation globale",
+      "gros œuvre",
+      "fondations",
+      "électricité générale",
+      "chauffage",
+      "HVAC",
+      "ventilation double flux",
+      "carrelage",
+      "parachèvement",
+      "Mister RenoConstruct",
+      "patron sur chantier"
     ],
     "faviconUrl": "/favicon.ico"
   },
   "branding": {
-    "companyName": "",
-    "logo": "/logo_Julian_Stouffs_Landscape_main.png",
-    "favicon": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=32&h=32&fit=crop",
+    "companyName": "Mister RenoConstruct",
+    "logo": "/logo.png",
+    "favicon": "/logo.png",
     "logoUrl": "/logo.svg",
-    "slogan": "L'art de sublimer vos espaces extérieurs."
+    "slogan": "L'excellence de la fondation à la finition, par des artisans passionnés."
   },
   "theme": {
-    "primary": "#14532d",
-    "secondary": "#86efac"
+    "primary": "#f97316",
+    "secondary": "#0f172a"
   },
   "contact": {
-    "phone": "+32 488 588 752",
-    "email": "js@jslandscape.be",
-    "address": "Heuken, 3 1640 Rhodes-St-Genèse",
-    "city": "Wezembeek-Oppem",
-    "postalCode": "1970"
+    "phone": "+32 476 27 41 95",
+    "email": "contact@misterrenoconstruct.be",
+    "address": "Avenue de l'Artisanat 12",
+    "city": "Bruxelles",
+    "postalCode": "1000"
   },
   "hero": {
-    "title": "Conception, aménagement et entretien de vos espaces verts",
-    "subtitle": "Votre partenaire paysagiste de confiance",
-    "description": "De la création complète à l'entretien régulier, nous mettons notre savoir-faire à votre service pour réaliser le jardin de vos rêves. Pavage, terrasses, plantations et aménagements sur mesure.",
-    "backgroundImage": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
-    "ctaText": "Demander un devis gratuit",
+    "title": "Votre projet de A à Z, avec le patron sur chantier",
+    "subtitle": "Expertise globale en construction & rénovation",
+    "description": "Depuis 2013, Mister RenoConstruct centralise l'intégralité de vos travaux. Avec notre équipe à taille humaine, nous gérons nous-mêmes le gros œuvre, l'électricité, le chauffage, l'HVAC et les finitions. Un seul interlocuteur direct pour un projet maîtrisé de la fondation à la remise des clés.",
+    "backgroundImage": "/Hero.jpg",
+    "ctaText": "Obtenir un devis gratuit",
     "ctaLink": "#contact",
-    "headline": "JS Landscape",
-    "subheadline": "Une équipe de professionnels passionnés pour un résultat à la hauteur de vos exigences.",
+    "headline": "Mister RenoConstruct",
+    "subheadline": "Une coordination parfaite et des finitions irréprochables, sans multiplier les intermédiaires.",
     "ctaLabel": "Contactez-nous",
     "ctaHref": "#contact",
-    "backgroundUrl": "https://images.pexels.com/photos/4503269/pexels-photo-4503269.jpeg?_gl=1*1acxdjj*_ga*NzE5NDEwMzU3LjE3NTQ5MjU5ODQ.*_ga_8JE65Q40S6*czE3NTU3NjkxNTIkbzgkZzEkdDE3NTU3Njk1NjYkajQkbDAkaDA.",
-    "stats": [
+    "backgroundUrl": "/hero-renovation.jpg",
+    "stats":[
       {
         "id": "experience",
         "value": "10+",
-        "label": "Années d'expérience",
+        "label": "Années d'expertise",
         "icon": "award"
       },
       {
         "id": "projects",
-        "value": "300+",
-        "label": "Projets réalisés",
-        "icon": "check-circle"
+        "value": "500+",
+        "label": "Chantiers livrés",
+        "icon": "building"
       },
       {
         "id": "satisfaction",
         "value": "100%",
-        "label": "Sur mesure",
-        "icon": "thumbs-up"
+        "label": "Clients satisfaits",
+        "icon": "check-circle"
       }
     ]
   },
-  "services": [
+  "services":[
     {
-      "id": "entretien-espaces-verts",
-      "title": "Entretien de Jardins",
-      "description": "Des contrats d'entretien adaptés à vos besoins : tonte de pelouse, taille de haies, élagage, abattage et ramassage de feuilles pour un jardin impeccable en toute saison.",
-      "image": "https://lh3.googleusercontent.com/pw/AP1GczO2Id5UjBvFN2iYcft1ox017od19ZGCVhidB5jaJsgj1IJo88i840YhDljBW1EkLtGQPHw0Cui6OxUHVbfpS0gFYgnCfpsh9bGcG-oEPu54eU4LjShBGwlckF1a-9nrTf4i5orsXSIMlEckuXVQuAwI=w1167-h778-s-no-gm?authuser=0",
+      "id": "gros-oeuvre-fondation",
+      "title": "Gros Œuvre & Fondations",
+      "description": "La solidité de votre bâtiment commence ici. Nous réalisons nous-mêmes vos fondations, dalles, maçonneries, et extensions avec une rigueur structurelle absolue et le respect des normes en vigueur.",
+      "image": "/serviceFondation.jpg",
       "price": "Sur devis",
-      "features": [
-        "Tonte et scarification",
-        "Taille et élagage",
-        "Contrats annuels ou ponctuels",
-        "Évacuation des déchets verts"
+      "features":[
+        "Terrassement et fondations",
+        "Maçonnerie et murs porteurs",
+        "Dalles et chapes",
+        "Agrandissement et extensions"
       ],
-      "icon": "🌱"
+      "icon": "🧱"
     },
     {
-      "id": "creation-amenagement",
-      "title": "Création & Aménagement",
-      "description": "Nous repensons vos espaces extérieurs de A à Z : conception de plans, plantation de massifs, engazonnement (semis ou rouleaux) et petite maçonnerie paysagère.",
-      "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop",
+      "id": "hvac-chauffage-ventilation",
+      "title": "Chauffage, HVAC & Ventilation",
+      "description": "Optimisez le confort énergétique de votre habitation. Nous installons vos systèmes de chauffage de pointe et vos ventilations (VMC simple et double flux) pour un air sain et une température idéale.",
+      "image": "/heating.jpg",
       "price": "Sur devis",
-      "features": [
-        "Étude et conception",
-        "Choix des végétaux",
-        "Pose de gazon",
-        "Aménagements sur mesure"
+      "features":[
+        "Installation de systèmes HVAC",
+        "Ventilation mécanique (VMC simple/double flux)",
+        "Pompes à chaleur et chaudières",
+        "Climatisation réversible"
       ],
-      "icon": "🌿"
+      "icon": "💨"
     },
     {
-      "id": "pavage-terrasses",
-      "title": "Pavage, Dallage & Terrasses",
-      "description": "Réalisation de vos allées, parkings et terrasses. Nous travaillons avec divers matériaux : clinkers, pierre naturelle, bois, composite et dalles en béton.",
-      "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=300&fit=crop",
+      "id": "electricite-domotique",
+      "title": "Électricité & Mise en conformité",
+      "description": "Installation électrique complète, rénovation, mise en conformité et intégration de systèmes domotiques. Nous garantissons des installations sécurisées, modernes et certifiées.",
+      "image": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&h=400&fit=crop",
       "price": "Sur devis",
-      "features": [
-        "Terrasses en bois ou composite",
-        "Allées et entrées de garage",
-        "Pose de clinkers et pierres naturelles",
-        "Finitions soignées"
+      "features":[
+        "Électricité générale et tirage de câbles",
+        "Mise en conformité RGIE",
+        "Domotique et maisons connectées",
+        "Éclairage intérieur et extérieur"
       ],
-      "icon": "🪵"
+      "icon": "⚡"
+    },
+    {
+      "id": "finitions-carrelage",
+      "title": "Finitions & Carrelage",
+      "description": "L'élégance dans le détail. Nous assurons la pose de vos revêtements de sol, faïences, plafonnages et menuiseries avec une précision millimétrique pour un rendu impeccable.",
+      "image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&h=400&fit=crop",
+      "price": "Sur devis",
+      "features":[
+        "Pose de carrelage (grands formats, mosaïques)",
+        "Aménagement de salles de bain clé en main",
+        "Plafonnage et cloisons",
+        "Peinture et menuiserie intérieure"
+      ],
+      "icon": "✨"
     }
   ],
   "about": {
-    "title": "Notre Savoir-Faire Paysager",
-    "description": "JS Landscape est une entreprise spécialisée dans l'aménagement et l'entretien de vos espaces extérieurs. Animés par la passion du travail bien fait, nous accompagnons les particuliers et les professionnels dans la concrétisation de leurs projets. Notre équipe qualifiée vous garantit un service professionnel, des finitions impeccables et un profond respect de l'environnement, quels que soient l'envergure et la complexité de votre aménagement.",
-    "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop",
-    "features": []
+    "title": "Un Savoir-Faire Global, Une Équipe Locale",
+    "description": "Fondée en 2013, Mister RenoConstruct s’est imposée comme une référence dans la rénovation. Notre grande force ? Nous sommes une petite équipe ultra-polyvalente. Que vous ayez besoin de couler des fondations, de refaire toute votre électricité, d’installer une VMC ou de carreler votre salon, ce sont les mêmes visages que vous verrez chaque jour sur votre chantier. Cette approche sans intermédiaire nous permet de garantir des finitions soignées, avec le patron toujours présent pour répondre à vos questions.",
+    "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop",
+    "features":[
+      "Patron toujours sur chantier",
+      "Équipe à taille humaine (2-3 pers.)",
+      "Maîtrise de tous les corps de métier",
+      "Aucune sous-traitance à outrance"
+    ]
   },
   "gallery": {
     "title": "Nos Dernières Réalisations",
-    "images": [
+    "images":[
       {
         "id": "1",
-        "url": "https://blog.techo-bloc.com/hubfs/2022-CA118-Showcase-RAP06636-HDR.jpg",
-        "alt": "Aménagement jardin moderne et pavage",
-        "category": "amenagement",
-        "title": "Aménagement Global"
+        "url": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&h=600&fit=crop",
+        "alt": "Rénovation de salon moderne avec sol carrelé",
+        "category": "finitions",
+        "title": "Aménagement Intérieur & Carrelage"
       },
       {
         "id": "2",
-        "url": "https://decks-docks.com/wp-content/uploads/2017/08/Floating-Deck.jpg",
-        "alt": "Création de terrasse sur mesure",
-        "category": "terrasse",
-        "title": "Terrasse et Decking"
+        "url": "https://images.unsplash.com/photo-1504307651254-35680f356f58?w=800&h=600&fit=crop",
+        "alt": "Chantier de gros oeuvre et fondation",
+        "category": "gros-oeuvre",
+        "title": "Fondations & Gros Œuvre"
       },
       {
         "id": "3",
-        "url": "https://www.southgateco.com/wp-content/uploads/2021/09/How-to-Give-Your-New-Backyard-a-Unique-Look.jpg",
-        "alt": "Entretien d'espaces verts et pelouse",
-        "category": "entretien",
-        "title": "Entretien de Pelouse"
+        "url": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=600&fit=crop",
+        "alt": "Installation de tableau électrique",
+        "category": "electricite",
+        "title": "Mise en Conformité Électrique"
       },
       {
         "id": "4",
-        "url": "https://www.willemsefrance.fr/cdn/shop/articles/banniere_Comment_creer_un_magnifique_massif_de_fleurs_vivaces_dans_votre_jardin4_YZ_1dca2564-dbe6-439d-ab47-928ddf90a246.jpg?v=1747037864",
-        "alt": "Création de massifs de fleurs",
-        "category": "plantation",
-        "title": "Plantations et Massifs"
+        "url": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&h=600&fit=crop",
+        "alt": "Salle de bain finie avec VMC intégrée",
+        "category": "hvac",
+        "title": "Salle de bain clé en main & Ventilation"
       }
     ],
-    "categories": [
-      "Aménagement",
-      "Terrasses",
-      "Entretien",
-      "Plantation",
-      "Pavage"
+    "categories":[
+      "Gros Œuvre",
+      "Finitions",
+      "Électricité",
+      "HVAC & Chauffage"
     ]
   },
   "testimonials": {
     "enabled": true,
     "title": "L'Avis de Nos Clients",
-    "subtitle": "La satisfaction de nos clients est notre plus belle carte de visite.",
-    "items": [
+    "subtitle": "La qualité de notre travail se mesure à la satisfaction de ceux qui nous font confiance au quotidien.",
+    "items":[
       {
         "id": "t1",
-        "name": "Laurent D.",
-        "role": "Client Particulier",
-        "content": "Superbe travail pour le pavage de notre allée et la création de notre nouvelle terrasse. Une équipe à l'écoute, ponctuelle et très soignée dans les finitions.",
+        "name": "Jean-Marc T.",
+        "role": "Propriétaire",
+        "content": "J'ai fait appel à Mister RenoConstruct pour la rénovation totale de ma maison. Du gros œuvre jusqu'au carrelage et à l'électricité, ils ont tout géré eux-mêmes avec brio. C'est super rassurant d'avoir le patron toujours présent sur le chantier !",
         "rating": 5
       },
       {
         "id": "t2",
-        "name": "Sophie M.",
-        "role": "Propriétaire de Villa",
-        "content": "Nous avons fait appel à JS Landscape pour l'élagage de grands arbres et la refonte de nos massifs. Le résultat est magnifique et le chantier a été rendu impeccable.",
+        "name": "Marie F.",
+        "role": "Propriétaire",
+        "content": "Une petite équipe qui fait des miracles. Ils ont refait toute notre salle de bain, de la plomberie à la pose du carrelage grand format. Un travail minutieux, très propre, et toujours dans la bonne humeur. Je les recommande les yeux fermés.",
         "rating": 5
       },
       {
         "id": "t3",
-        "name": "Marc B.",
-        "role": "Gestionnaire de copropriété",
-        "content": "Nous avons un contrat d'entretien annuel pour les espaces verts de notre résidence. Professionnalisme, régularité et toujours de bons conseils.",
-        "rating": 4
+        "name": "Michel D.",
+        "role": "Propriétaire",
+        "content": "Refonte complète de notre système de chauffage et mise en conformité électrique. De vrais artisans qui connaissent leur métier sur le bout des doigts. Le chantier était impeccable tous les soirs en partant.",
+        "rating": 5
       }
     ]
   },
   "pricing": {
     "enabled": true,
-    "title": "Nos Services sur Mesure",
-    "subtitle": "Chaque projet est unique. Nous vous proposons un devis détaillé et personnalisé.",
-    "tiers": [
+    "title": "Nos Solutions de Rénovation",
+    "subtitle": "Nous adaptons notre travail à l'envergure de votre projet.",
+    "tiers":[
       {
-        "id": "entretien",
-        "name": "Contrat d'Entretien",
-        "description": "La solution tranquillité pour un jardin toujours parfait.",
+        "id": "techniques",
+        "name": "Techniques & Mises aux normes",
+        "description": "Pour la modernisation de vos installations spécifiques.",
         "price": "Sur devis",
-        "period": "annuel ou ponctuel",
-        "features": [
-          "Tonte, scarification et engrais",
-          "Taille des haies et arbustes",
-          "Désherbage et nettoyage",
-          "Évacuation des déchets verts"
+        "period": "selon chantier",
+        "features":[
+          "Mise aux normes électriques",
+          "Installation chauffage & PAC",
+          "Pose de VMC simple/double flux",
+          "Câblage domotique"
         ],
-        "ctaText": "Demander une offre",
+        "ctaText": "Consulter nos experts",
         "ctaLink": "#contact"
       },
       {
-        "id": "amenagement",
-        "name": "Aménagement Extérieur",
-        "description": "Création ou rénovation de vos espaces extérieurs.",
+        "id": "renovation-globale",
+        "name": "Rénovation Clé en Main",
+        "description": "L'offre complète : de la démolition aux finitions décoratives.",
         "price": "Sur devis",
-        "features": [
-          "Pavage, dallage et clinkers",
-          "Création de terrasses (bois/composite)",
-          "Pose de clôtures et palissades",
-          "Travaux de terrassement",
-          "Fourniture des matériaux de qualité"
+        "features":[
+          "Démolition et gros œuvre",
+          "Nouvelles chapes et maçonnerie",
+          "Toutes techniques (Électricité, HVAC, Sanitaire)",
+          "Plafonnage et cloisons",
+          "Carrelage et revêtements de sol"
         ],
         "highlighted": true,
-        "ctaText": "Parlez-nous de votre projet",
+        "ctaText": "Décrivez votre projet",
         "ctaLink": "#contact"
       },
       {
-        "id": "premium",
-        "name": "Création Paysagère",
-        "description": "Conception complète de votre futur jardin.",
+        "id": "extension",
+        "name": "Construction & Extensions",
+        "description": "Agrandissez votre espace de vie avec une base solide.",
         "price": "Sur devis",
-        "features": [
-          "Étude et plans sur mesure",
-          "Choix et plantation des végétaux",
-          "Semis de gazon ou gazon en rouleaux",
-          "Maçonnerie paysagère",
-          "Suivi de chantier",
-          "Conseils d'entretien post-création"
+        "features":[
+          "Terrassement et fondations",
+          "Élévation des murs porteurs",
+          "Charpente et toiture",
+          "Intégration technique et raccordements",
+          "Suivi de chantier complet"
         ],
-        "ctaText": "Nous contacter",
+        "ctaText": "Demander une étude",
         "ctaLink": "#contact"
       }
     ]
   },
   "footer": {
-    "description": "JS Landscape - Votre expert en aménagement extérieur, création de jardins, pavage et entretien. Qualité, rigueur et passion à votre service.",
-    "socialLinks": [
+    "description": "Mister RenoConstruct - L'excellence en construction et rénovation depuis 2013. Une petite équipe d'artisans passionnés qui maîtrise chaque étape de votre chantier, avec le patron toujours sur place.",
+    "socialLinks":[
       {
         "platform": "Facebook",
         "url": "https://facebook.com",
@@ -250,7 +269,7 @@
       },
       {
         "platform": "Instagram",
-        "url": "https://www.instagram.com/js.landscape/",
+        "url": "https://instagram.com",
         "icon": "instagram"
       },
       {
@@ -259,18 +278,18 @@
         "icon": "linkedin"
       }
     ],
-    "quickLinks": [
+    "quickLinks":[
       {
-        "title": "Nos Services",
+        "title": "Gros Œuvre",
         "url": "#services"
       },
       {
-        "title": "À Propos",
-        "url": "#about"
+        "title": "HVAC & Électricité",
+        "url": "#services"
       },
       {
-        "title": "Nos Réalisations",
-        "url": "#gallery"
+        "title": "Carrelage & Finitions",
+        "url": "#services"
       },
       {
         "title": "Demander un Devis",
@@ -278,23 +297,22 @@
       }
     ]
   },
-  "lastModified": "2026-03-31T16:15:00.000Z",
+  "lastModified": "2024-05-20T16:15:00.000Z",
   "booking": {
     "enabled": true,
-    "apiUrl": "Clement@example.com",
-    "apiKey": "rg_demo_rubini_garden_booking_key",
+    "apiUrl": "",
+    "apiKey": "",
     "defaultDuration": 60,
     "workingHours": {
       "start": "08:00",
       "end": "18:00"
     },
-    "workingDays": [
+    "workingDays":[
       1,
       2,
       3,
       4,
-      5,
-      6
+      5
     ]
   }
 }

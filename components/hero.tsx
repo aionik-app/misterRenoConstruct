@@ -5,166 +5,133 @@ import {
   useScroll,
   useTransform,
   useInView,
-  AnimatePresence,
+  animate,
 } from 'framer-motion';
 import {
   ArrowRight,
-  Award,
+  Phone,
+  Shield,
+  Zap,
+  Wrench,
+  HardHat,
   CheckCircle,
-  ThumbsUp,
-  Leaf,
-  Trees,
+  Building2,
+  Award,
   MapPin,
+  Hammer,
 } from 'lucide-react';
 import Image from 'next/image';
 import { useId, useRef, useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import type { SiteConfig } from '@/types/site-config';
 
 const IconMap: Record<string, React.ElementType> = {
   award: Award,
   'check-circle': CheckCircle,
-  'thumbs-up': ThumbsUp,
-  leaf: Leaf,
+  building: Building2,
+  hammer: Hammer,
 };
 
 interface HeroProps {
   config: SiteConfig;
 }
 
-// Floating leaf particle
-function FloatingLeaf({ delay, x, duration }: { delay: number; x: number; duration: number }) {
-  return (
-    <motion.div
-      className="absolute top-0 pointer-events-none"
-      style={{ left: `${x}%` }}
-      initial={{ y: -60, opacity: 0, rotate: -20 }}
-      animate={{
-        y: '110vh',
-        opacity: [0, 0.6, 0.6, 0],
-        rotate: ['-20deg', '40deg', '-10deg', '30deg'],
-        x: [0, 30, -20, 15, 0],
-      }}
-      transition={{
-        duration,
-        delay,
-        repeat: Infinity,
-        ease: 'linear',
-      }}
-    >
-      <Leaf className="h-4 w-4 text-green-400/40" />
-    </motion.div>
-  );
-}
-
-// Animated counter
-function Counter({ value, suffix = '' }: { value: string; suffix?: string }) {
+// Composant compteur animé (avec framer-motion 'animate')
+function Counter({ value }: { value: string }) {
+  // Extrait uniquement le nombre (ex: "500+" devient 500)
   const num = parseInt(value.replace(/\D/g, ''), 10);
-  const ref = useRef(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
-  const [display, setDisplay] = useState(0);
-
+  const[display, setDisplay] = useState(0);
+  
   useEffect(() => {
     if (!isInView || isNaN(num)) return;
-    let start = 0;
-    const step = num / 40;
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= num) {
-        setDisplay(num);
-        clearInterval(timer);
-      } else {
-        setDisplay(Math.floor(start));
-      }
-    }, 30);
-    return () => clearInterval(timer);
-  }, [isInView, num]);
+    
+    // Animation Framer Motion native pour les chiffres
+    const controls = animate(0, num, {
+      duration: 1.5,
+      ease: 'easeOut',
+      onUpdate(val) {
+        setDisplay(Math.floor(val));
+      },
+    });
 
+    return () => controls.stop();
+  }, [isInView, num]);
+  
   if (isNaN(num)) return <span ref={ref}>{value}</span>;
+  
+  // Recompose le texte (ex: 500 + "+")
+  const suffix = value.replace(/[\d]/g, '');
   return (
     <span ref={ref}>
       {display}
-      {value.replace(/[\d]/g, '')}
+      {suffix}
     </span>
   );
 }
 
+// Services mis en avant sous le texte
+const SERVICES =[
+  { icon: Building2, label: 'Gros œuvre' },
+  { icon: Zap, label: 'Électricité' },
+  { icon: Wrench, label: 'Chauffage' },
+  { icon: Shield, label: 'Ventilation' },
+];
+
 export function Hero({ config }: HeroProps) {
   const headingId = useId();
   const containerRef = useRef<HTMLElement>(null);
-
+  
   const { scrollY } = useScroll();
-  const bgY = useTransform(scrollY, [0, 600], ['0%', '25%']);
-  const overlayOpacity = useTransform(scrollY, [0, 400], [0.45, 0.7]);
-  const contentY = useTransform(scrollY, [0, 400], ['0%', '8%']);
+  const bgY = useTransform(scrollY, [0, 600], ['0%', '15%']);
+  const contentY = useTransform(scrollY, [0, 400], ['0%', '6%']);
 
-  const leaves = [
-    { delay: 0, x: 10, duration: 12 },
-    { delay: 3, x: 25, duration: 16 },
-    { delay: 6, x: 45, duration: 14 },
-    { delay: 1.5, x: 65, duration: 18 },
-    { delay: 8, x: 80, duration: 11 },
-    { delay: 4, x: 90, duration: 15 },
+  // Valeurs par défaut sécurisées via la config JSON
+  const heroTitle = config?.hero?.title ?? 'Mister RenoConstruct';
+  const heroDescription = config?.hero?.description ?? "Gros œuvre, électricité, chauffage, ventilation et finitions intérieures — livrés clés en main avec une exigence de chantier professionnelle.";
+
+  const stats = config?.hero?.stats?.length ? config.hero.stats :[
+    { id: '1', value: '15+', label: "Ans d'expérience", icon: 'building' },
+    { id: '2', value: '250+', label: 'Chantiers livrés', icon: 'check-circle' },
+    { id: '3', value: '100%', label: 'Garantie décennale', icon: 'award' },
   ];
-
-  /* ─── Animation variants ─── */
-  const containerVariants = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
-  };
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-  };
-
-  const fadeLeft = {
-    hidden: { opacity: 0, x: -30 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-  };
-
-  const scaleIn = {
-    hidden: { opacity: 0, scale: 0.85 },
-    show: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-  };
-
-  const lineGrow = {
-    hidden: { scaleX: 0, originX: 0 },
-    show: { scaleX: 1, transition: { duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] } },
-  };
 
   return (
     <section
+      id="hero"
       ref={containerRef}
-      id={`hero-${headingId}`}
       aria-labelledby={`hero-heading-${headingId}`}
-      className="relative flex items-center min-h-screen h-auto max-h-screen overflow-hidden"
-      style={{ fontFamily: "'Cormorant Garamond', serif" }}
+      // h-[100dvh] s'assure de prendre EXACTEMENT l'écran (bureau comme mobile)
+      className="relative w-full h-[100dvh] min-h-[700px] overflow-hidden bg-slate-50 flex flex-col"
     >
-      {/* ── Parallax Background ── */}
-      <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
-        <Image
-          src={config.hero.backgroundImage || '/placeholder.svg?height=1200&width=1920&query=lush+garden+brussels'}
-          alt="Jardin aménagé à Bruxelles"
-          fill
-          priority
-          className="object-cover scale-110"
-          sizes="100vw"
-        />
+      {/* ── IMAGE DE FOND (avec effet parallaxe) ── */}
+      <motion.div className="absolute inset-0 z-0 overflow-hidden" style={{ y: bgY }}>
+        <motion.div
+          className="absolute inset-0 w-full h-full"
+          initial={{ opacity: 0, y: 60, scale: 1.1 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Image
+            src={config?.hero?.backgroundImage || "/Hero.jpg"}
+            alt="Chantier Mister RenoConstruct"
+            fill
+            priority
+            className="object-cover object-right"
+            sizes="100vw"
+          />
+        </motion.div>
       </motion.div>
 
-      {/* ── Overlay gradient ── */}
-      <motion.div
-        className="absolute inset-0 z-[1]"
-        style={{ opacity: overlayOpacity }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0f1f0a]/90 via-[#0f1f0a]/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0f1f0a]/70 via-transparent to-transparent" />
-      </motion.div>
+      {/* ── OVERLAYS DE LISIBILITÉ ── */}
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent" />
+      </div>
 
-      {/* ── Texture grain overlay ── */}
+      {/* ── TEXTURE SUBTILE ── */}
       <div
-        className="absolute inset-0 z-[2] opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 z-[2] opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
           backgroundRepeat: 'repeat',
@@ -172,200 +139,185 @@ export function Hero({ config }: HeroProps) {
         }}
       />
 
-      {/* ── Floating leaves ── */}
-      <div className="absolute inset-0 z-[3] overflow-hidden pointer-events-none">
-        {leaves.map((l, i) => (
-          <FloatingLeaf key={i} {...l} />
-        ))}
-      </div>
-
-      {/* ── Decorative vertical line ── */}
+      {/* ── LIGNE DÉCORATIVE ORANGE ── */}
       <motion.div
         className="absolute left-[calc(50%-1px)] top-0 bottom-0 z-[3] hidden lg:block"
         style={{
-          background: 'linear-gradient(to bottom, transparent, rgba(134,188,66,0.15), transparent)',
+          background: 'linear-gradient(to bottom, transparent, rgba(230,153,56,0.2), transparent)',
           width: 1,
         }}
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
-        transition={{ duration: 1.5, delay: 1, ease: 'easeInOut' }}
+        transition={{ duration: 1.5, delay: 0.5, ease: 'easeInOut' }}
       />
 
-      {/* ── Main content ── */}
+      {/* ── CONTENU PRINCIPAL ── */}
       <motion.div
-        className="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-12 py-8 sm:py-10"
+        className="relative z-10 flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 pt-24 pb-8"
         style={{ y: contentY }}
       >
-        <motion.div
-          className="max-w-3xl"
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-        >
-          {/* Location badge */}
-          <motion.div variants={fadeLeft} className="mb-3 sm:mb-4">
-            <span
-              className="inline-flex items-center gap-1.5 text-[#a8c97f] text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase"
-              style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.2em' }}
-            >
-              <MapPin className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-              <span className="hidden xs:inline">Bruxelles & environs</span>
-              <span className="xs:hidden">Bruxelles</span>
-            </span>
+        <div className="max-w-3xl">
+          {/* Badges hauts */}
+          <motion.div
+            className="flex flex-wrap items-center gap-3 mb-5 sm:mb-6"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            <div className="flex items-center gap-2 bg-orange-50 border border-orange-100 px-3 py-1.5 rounded-full shadow-sm">
+              <HardHat className="h-3.5 w-3.5 text-[#e69938]" />
+              <span 
+                className="text-[#e69938] text-[10px] sm:text-xs font-bold uppercase tracking-widest"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Entreprise Générale du BTP
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-slate-500 text-[10px] sm:text-xs font-medium">
+              <MapPin className="h-3.5 w-3.5" />
+              <span className="tracking-widest uppercase" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                Intervention sur toute la région
+              </span>
+            </div>
           </motion.div>
 
-          {/* Subtitle pill */}
-          <motion.div variants={fadeLeft} className="mb-3 sm:mb-4">
-            <span
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#86bc42]/15 border border-[#86bc42]/30 text-[#b8d97f] px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-sm backdrop-blur-sm"
-              style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.65rem, 2vw, 0.78rem)', letterSpacing: '0.06em' }}
-            >
-              <Trees className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-              {config.hero.subtitle}
-            </span>
-          </motion.div>
-
-          {/* Heading — split into two lines for drama */}
-          <motion.div variants={fadeUp} className="mb-2 overflow-hidden">
-            <h1
+          {/* Titre (H1) */}
+          <div className="overflow-hidden mb-4">
+            <motion.h1
               id={`hero-heading-${headingId}`}
-              className="font-bold text-white leading-[1.05] sm:leading-[1.0]"
+              className="text-slate-900 font-bold leading-[1.05]"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(2rem, 8vw, 5.2rem)',
-                fontWeight: 700,
+                fontSize: 'clamp(2.5rem, 6.5vw, 5rem)',
                 letterSpacing: '-0.02em',
               }}
+              initial={{ y: '110%' }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              {config.hero.title}
-            </h1>
-          </motion.div>
+              {heroTitle}
+            </motion.h1>
+          </div>
 
-          {/* Animated underline accent */}
+          {/* Ligne accentuée orange */}
           <motion.div
-            className="h-[2px] sm:h-[3px] w-16 sm:w-24 bg-gradient-to-r from-[#86bc42] to-[#b8d97f] rounded-full mb-4 sm:mb-5"
-            variants={lineGrow}
+            className="h-[3px] w-20 sm:w-28 bg-gradient-to-r from-[#e69938] to-[#fcd288] rounded-full mb-6 shadow-sm"
+            initial={{ scaleX: 0, originX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 1.0, duration: 0.6, ease:[0.22, 1, 0.36, 1] }}
           />
 
-          {/* Description */}
+          {/* Paragraphe descriptif */}
           <motion.p
-            variants={fadeUp}
-            className="text-white/70 leading-relaxed mb-6 sm:mb-7 max-w-xl"
+            className="text-slate-600 leading-relaxed max-w-xl mb-8"
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 'clamp(0.9rem, 2.5vw, 1.15rem)',
-              fontWeight: 300,
+              fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)',
+              fontWeight: 400,
             }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.6 }}
           >
-            {config.hero.description}
+            {heroDescription}
           </motion.p>
 
-          {/* CTAs */}
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
-            {/* Primary CTA */}
-            <motion.a
-              href={config.hero.ctaLink}
-              aria-label={config.hero.ctaText}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm font-semibold text-[#0f1f0a]"
-              style={{
-                background: 'linear-gradient(135deg, #86bc42 0%, #b8d97f 100%)',
-                fontFamily: "'DM Sans', sans-serif",
-                letterSpacing: '0.04em',
-              }}
-            >
-              {/* Shimmer */}
-              <motion.span
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-12"
-                animate={{ translateX: ['−100%', '200%'] }}
-                transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 3 }}
-              />
-              {config.hero.ctaText}
-              <motion.span
-                className="inline-flex"
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              </motion.span>
-            </motion.a>
-
-            {/* Secondary CTA */}
-            <motion.a
-              href="#services"
-              whileHover={{ scale: 1.03, backgroundColor: 'rgba(255,255,255,0.08)' }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm font-medium text-white/80 backdrop-blur-sm transition-colors"
-              style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.04em' }}
-            >
-              Nos services
-            </motion.a>
-          </motion.div>
-
-          {/* Stats row */}
+          {/* Mini-tags Services */}
           <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap gap-x-6 gap-y-4 sm:gap-x-10 sm:gap-y-6"
+            className="flex flex-wrap gap-2 sm:gap-3 mb-8"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0, duration: 0.5 }}
           >
-            {config.hero.stats?.map((stat, i) => {
-              const IconComponent = IconMap[stat.icon] || Leaf;
-              return (
-                <motion.div
-                  key={stat.id}
-                  className="flex items-center gap-2 sm:gap-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 + i * 0.15, duration: 0.5 }}
+            {SERVICES.map(({ icon: Icon, label }) => (
+              <div
+                key={label}
+                className="flex items-center gap-2 border border-slate-200 bg-white/60 backdrop-blur-sm px-3.5 py-2 rounded-lg text-slate-700 shadow-sm transition-all hover:border-[#e69938]/40 hover:bg-white"
+              >
+                <Icon className="h-4 w-4 text-[#e69938]" />
+                <span
+                  className="text-[10px] sm:text-xs font-bold uppercase tracking-wider"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
                 >
-                  {/* Icon bubble */}
-                  <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-[#86bc42]/15 border border-[#86bc42]/20">
-                    <IconComponent className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#a8c97f]" />
-                  </div>
-                  <div className="flex flex-col leading-none">
-                    <span
-                      className="text-white font-bold text-lg sm:text-xl"
-                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    >
-                      <Counter value={stat.value} />
-                    </span>
-                    <span
-                      className="text-white/50 text-[10px] sm:text-xs mt-0.5 sm:mt-1"
-                      style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.05em' }}
-                    >
-                      {stat.label}
-                    </span>
-                  </div>
-                  {/* Vertical separator */}
-                  {i < (config.hero.stats?.length ?? 0) - 1 && (
-                    <div className="hidden sm:block w-px h-8 sm:h-10 bg-white/10 ml-2 sm:ml-4" />
-                  )}
-                </motion.div>
-              );
-            })}
+                  {label}
+                </span>
+              </div>
+            ))}
           </motion.div>
-        </motion.div>
+
+          {/* Boutons (CTAs) */}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 0.5 }}
+          >
+            <motion.a
+              href={config?.hero?.ctaLink ?? '#contact'}
+              className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#e69938] to-[#f97316] text-white px-8 py-3.5 sm:py-4 rounded-md font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-orange-500/20"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {config?.hero?.ctaText ?? 'Obtenir un devis gratuit'}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </motion.a>
+            <motion.a
+              href={`tel:${config?.contact?.phone ?? ''}`}
+              className="inline-flex items-center justify-center gap-2 border border-slate-300 bg-white/50 backdrop-blur-sm text-slate-700 px-8 py-3.5 sm:py-4 rounded-md font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-white hover:border-slate-400 transition-colors shadow-sm"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Phone className="h-4 w-4 text-[#e69938]" />
+              {config?.contact?.phone ?? 'Nous appeler'}
+            </motion.a>
+          </motion.div>
+        </div>
       </motion.div>
 
-      {/* ── Scroll indicator ── */}
+      {/* ── BARRE DE STATISTIQUES (FIXÉE EN BAS GRÂCE AU FLEX) ── */}
       <motion.div
-        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 sm:gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
+        className="relative z-10 shrink-0 border-t border-slate-200 bg-white/80 backdrop-blur-lg"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.3, duration: 0.6 }}
       >
-        <span
-          className="text-white/30 text-[9px] sm:text-xs tracking-widest uppercase"
-          style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.5rem, 1.5vw, 0.65rem)' }}
-        >
-          Défiler
-        </span>
-        <motion.div
-          className="w-px h-8 sm:h-12 bg-gradient-to-b from-[#86bc42]/60 to-transparent"
-          animate={{ scaleY: [1, 0.4, 1], opacity: [0.7, 0.2, 0.7] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ transformOrigin: 'top' }}
-        />
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex flex-col sm:flex-row justify-between divide-y sm:divide-y-0 sm:divide-x divide-slate-200">
+          {stats.map((stat, index) => {
+            const Icon = IconMap[stat.icon] || Hammer;
+            return (
+              <motion.div
+                key={stat.id}
+                className="flex flex-col justify-center py-4 sm:py-5 sm:px-8 flex-1 first:pl-0 last:pr-0"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.4 + index * 0.1, duration: 0.5 }}
+              >
+                <div className="flex items-center gap-2.5 mb-1">
+                  <div className="p-1.5 rounded-md bg-orange-50 text-[#e69938]">
+                    <Icon className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
+                  </div>
+                  <span
+                    className="text-slate-900 font-bold leading-none"
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)',
+                    }}
+                  >
+                    <Counter value={stat.value} />
+                  </span>
+                </div>
+                <span
+                  className="text-slate-500 text-[10px] sm:text-xs uppercase font-bold tracking-widest pl-1"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                  {stat.label}
+                </span>
+              </motion.div>
+            );
+          })}
+        </div>
       </motion.div>
     </section>
   );

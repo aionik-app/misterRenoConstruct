@@ -1,31 +1,36 @@
 import type { Metadata } from 'next';
-import { Geist, Playfair_Display } from 'next/font/google';
+import { DM_Sans, Cormorant_Garamond } from 'next/font/google';
 import type React from 'react';
 import './globals.css';
 
-// On mappe directement sur les variables utilisées dans globals.css
-const geist = Geist({
+// Remplacement de Geist par DM Sans (votre nouvelle police sans-serif)
+const dmSans = DM_Sans({
   subsets: ['latin'],
+  weight:['300', '400', '500', '700'],
   display: 'swap',
-  variable: '--font-sans', // ✅ correspond à font-sans dans globals.css
+  variable: '--font-sans', // ✅ correspond à font-sans dans Tailwind / globals.css
 });
 
-const playfairDisplay = Playfair_Display({
+// Remplacement de Playfair par Cormorant Garamond (votre police pour les titres)
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ['latin'],
+  weight:['300', '400', '500', '600', '700'],
   display: 'swap',
-  variable: '--font-serif', // ✅ correspond à font-serif dans globals.css
+  variable: '--font-serif', // ✅ correspond à font-serif dans Tailwind / globals.css
 });
 
 export const metadata: Metadata = {
-  title: 'Jardins & Espaces Verts - Services de Jardinage Professionnel',
+  title: 'Mister RenoConstruct | Rénovation et Construction Clé en Main',
   description:
-    'Spécialiste en aménagement extérieur, tonte de pelouse, création de terrasses, plantation et entretien de jardins. Devis gratuit.',
+    'Artisans experts en construction et rénovation depuis 2013. De la fondation à la finition : gros œuvre, électricité, chauffage, HVAC et carrelage. Patron sur chantier.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${geist.variable} ${playfairDisplay.variable}`}>
-      <body className="antialiased bg-background text-foreground font-sans">{children}</body>
+    <html lang="fr" className={`${dmSans.variable} ${cormorantGaramond.variable}`}>
+      <body className="antialiased bg-slate-50 text-slate-900 font-sans">
+        {children}
+      </body>
     </html>
   );
 }
