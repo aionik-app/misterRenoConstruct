@@ -1,7 +1,7 @@
 'use client';
 
 import { Menu, Phone, X, ArrowRight, ChevronRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { SiteConfig } from '@/types/site-config';
 import Image from 'next/image';
@@ -13,10 +13,26 @@ interface HeaderProps {
 export function Header({ config }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const update = () => {
+      if (headerRef.current) {
+        document.documentElement.style.setProperty(
+          '--header-height',
+          `${headerRef.current.offsetHeight}px`
+        );
+      }
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    if (headerRef.current) ro.observe(headerRef.current);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -35,47 +51,49 @@ export function Header({ config }: HeaderProps) {
   return (
     <>
       <header
-        className="fixed bg-white top-0 left-0 right-0 z-40 transition-all duration-300 font-sans"
+        ref={headerRef}
+        className="fixed top-0 left-0 right-0 z-40 transition-all duration-300 font-sans"
+        style={{ overflow: 'visible' }}
       >
         <div
           className="transition-all duration-300"
           style={{
-            background: isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
-            borderBottom: isScrolled ? '1px solid rgba(226, 232, 240, 0.8)' : '1px solid transparent',
-            backdropFilter: isScrolled ? 'blur(12px)' : 'none',
+            background: isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255,255,255,0.92)',
+            borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
+            backdropFilter: 'blur(12px)',
             boxShadow: isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.05)' : 'none',
           }}
         >
-          {/* Modification de la largeur max et des paddings pour aligner plus à gauche */}
-          <div className="max-w-[1600px] mx-auto px-2 sm:px-4 lg:px-6 flex items-center justify-between transition-all duration-300"
-            style={{ height: isScrolled ? 72 : 96 }}>
-
-            {/* ── Logo ── */}
-            <a href="/" className="flex items-center gap-2 sm:gap-3 group">
+          <div
+            className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300"
+            style={{ height: isScrolled ? 56 : 68 }}
+          >
+            <a href="/" className="flex items-center gap-2 sm:gap-3 group relative">
               <div
-                className="relative flex items-center justify-center w-20 h-20 sm:w-36 sm:h-36 transition-transform duration-300 group-hover:scale-105 shrink-0"
+                className="relative shrink-0 transition-transform duration-300 group-hover:scale-105"
+                style={{
+                  width: 'clamp(72px, 10vw, 120px)',
+                  height: 'clamp(72px, 10vw, 120px)',
+                  marginBottom: isScrolled ? '-12px' : '-16px',
+                }}
               >
                 <Image
-                  src={config?.branding?.logo || "/logo.png"}
+                  src={config?.branding?.logo || '/logo.png'}
                   alt={`Logo ${config?.branding?.companyName || 'Mister RenoConstruct'}`}
                   fill
                   priority
                   className="object-contain"
-                  sizes="(max-width: 768px) 100px, 148px"
+                  sizes="(max-width: 768px) 72px, 120px"
                 />
               </div>
               <div className="flex flex-col justify-center leading-tight">
-                {/* Séparation du texte sur deux lignes */}
-                <div
-                  className="text-[#e69938] text-[10px] sm:text-[12px] font-bold uppercase tracking-[0.15em] mt-1 flex flex-col gap-0.5"
-                >
+                <div className="text-[#e69938] text-[10px] sm:text-[12px] font-bold uppercase tracking-[0.15em] flex flex-col gap-0.5">
                   <span>Construction</span>
-                  <span>& Rénovation</span>
+                  <span>&amp; Rénovation</span>
                 </div>
               </div>
             </a>
 
-            {/* ── Desktop nav ── */}
             <nav className="hidden md:flex items-center gap-2 lg:gap-4">
               {navigation.map((item) => (
                 <a
@@ -89,7 +107,6 @@ export function Header({ config }: HeaderProps) {
               ))}
             </nav>
 
-            {/* ── Right: phone + CTA ── */}
             <div className="hidden md:flex items-center gap-4 lg:gap-6">
               <a
                 href={`tel:${config?.contact?.phone}`}
@@ -102,7 +119,7 @@ export function Header({ config }: HeaderProps) {
               </a>
               <motion.a
                 href="#contact"
-                className="inline-flex items-center gap-2 bg-[#e69938] shrink-0 text-white text-xs lg:text-sm font-bold uppercase tracking-wider px-5 py-2.5 lg:px-6 lg:py-3 rounded-md shadow-md shadow-orange-500/20"
+                className="inline-flex items-center gap-2 bg-[#e69938] shrink-0 text-white text-xs lg:text-sm font-bold uppercase tracking-wider px-5 py-2 lg:px-6 lg:py-2.5 rounded-md shadow-md shadow-orange-500/20"
                 whileHover={{ scale: 1.02, backgroundColor: '#d98b2f' }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -111,9 +128,9 @@ export function Header({ config }: HeaderProps) {
               </motion.a>
             </div>
 
-            {/* ── Mobile burger ── */}
             <button
-              className="md:hidden flex items-center justify-center w-10 h-10 rounded-md border border-slate-200 bg-white text-slate-700 hover:border-[#e69938] hover:text-[#e69938] transition-colors shadow-sm"
+              type="button"
+              className="md:hidden flex items-center justify-center w-9 h-9 rounded-md border border-slate-200 bg-white text-slate-700 hover:border-[#e69938] hover:text-[#e69938] transition-colors shadow-sm"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Menu"
             >
@@ -137,7 +154,6 @@ export function Header({ config }: HeaderProps) {
         </div>
       </header>
 
-      {/* ── Mobile full-screen menu ── */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -148,33 +164,35 @@ export function Header({ config }: HeaderProps) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Header row inside menu */}
-            <div className="flex items-center justify-between px-4 py-4 border-b border-slate-100">
+            <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100">
               <div className="flex items-center gap-3">
-                <div className="relative w-28 h-28 shrink-0">
+                <div className="relative w-20 h-20 shrink-0">
                   <Image
-                    src={config?.branding?.logo || "/logo.png"}
+                    src={config?.branding?.logo || '/logo.png'}
                     alt={`Logo ${config?.branding?.companyName || 'Mister RenoConstruct'}`}
                     fill
-                    className="object-cover h-96 w-96"
+                    className="object-contain"
                     sizes="80px"
                   />
                 </div>
                 <div className="flex flex-col leading-none">
-                  <span className="text-slate-900 font-extrabold tracking-tight" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.2rem' }}>
-                    {config?.branding?.companyName || "Mister Reno"}
+                  <span
+                    className="text-slate-900 font-extrabold tracking-tight"
+                    style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.2rem' }}
+                  >
+                    {config?.branding?.companyName || 'Mister Reno'}
                   </span>
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => setIsMenuOpen(false)}
-                className="w-10 h-10 rounded-md border border-slate-200 bg-white flex items-center justify-center text-slate-700 shadow-sm"
+                className="w-9 h-9 rounded-md border border-slate-200 bg-white flex items-center justify-center text-slate-700 shadow-sm"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            {/* Nav links */}
             <nav className="flex-1 flex flex-col px-6 py-8 gap-2 overflow-y-auto">
               {navigation.map((item, i) => (
                 <motion.a
@@ -197,7 +215,6 @@ export function Header({ config }: HeaderProps) {
               ))}
             </nav>
 
-            {/* Bottom Contact & CTA */}
             <motion.div
               className="p-6 bg-slate-50 border-t border-slate-100 flex flex-col gap-4"
               initial={{ opacity: 0, y: 20 }}
