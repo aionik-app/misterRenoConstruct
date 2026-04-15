@@ -24,6 +24,9 @@ import Image from 'next/image';
 import { useId, useRef, useState, useEffect } from 'react';
 import type { SiteConfig } from '@/types/site-config';
 
+/**
+ * Mappage des icônes pour les statistiques
+ */
 const IconMap: Record<string, React.ElementType> = {
   award: Award,
   'check-circle': CheckCircle,
@@ -35,6 +38,9 @@ interface HeroProps {
   config: SiteConfig;
 }
 
+/**
+ * Composant de compteur animé avec détection de vue
+ */
 function Counter({ value }: { value: string }) {
   const num = parseInt(value.replace(/\D/g, ''), 10);
   const ref = useRef<HTMLSpanElement>(null);
@@ -46,16 +52,26 @@ function Counter({ value }: { value: string }) {
     const controls = animate(0, num, {
       duration: 1.5,
       ease: 'easeOut',
-      onUpdate(val) { setDisplay(Math.floor(val)); },
+      onUpdate(val) {
+        setDisplay(Math.floor(val));
+      },
     });
     return () => controls.stop();
   }, [isInView, num]);
 
   if (isNaN(num)) return <span ref={ref}>{value}</span>;
   const suffix = value.replace(/[\d]/g, '');
-  return <span ref={ref}>{display}{suffix}</span>;
+  return (
+    <span ref={ref}>
+      {display}
+      {suffix}
+    </span>
+  );
 }
 
+/**
+ * Liste des services mis en avant dans le Hero
+ */
 const SERVICES = [
   { icon: Building2, label: 'Gros œuvre' },
   { icon: Zap, label: 'Électricité' },
@@ -67,10 +83,14 @@ export function Hero({ config }: HeroProps) {
   const headingId = useId();
   const containerRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  
+  // États pour la gestion dynamique des hauteurs
   const [statsHeight, setStatsHeight] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(68);
 
-  // Mesure hauteur réelle de la barre stats
+  /**
+   * Effet pour mesurer la hauteur réelle de la barre de statistiques
+   */
   useEffect(() => {
     if (!statsRef.current) return;
     const ro = new ResizeObserver(([e]) => setStatsHeight(e.contentRect.height));
@@ -78,23 +98,27 @@ export function Hero({ config }: HeroProps) {
     return () => ro.disconnect();
   }, []);
 
-  // Lit --header-height exposée par le Header
+  /**
+   * Effet pour lire la variable CSS du Header (--header-height)
+   */
   useEffect(() => {
     const read = () => {
       const v = getComputedStyle(document.documentElement)
-        .getPropertyValue('--header-height').trim();
+        .getPropertyValue('--header-height')
+        .trim();
       const n = parseFloat(v);
       if (!isNaN(n)) setHeaderHeight(n);
     };
     read();
-    // Relit si la var change (scroll qui compresse le header)
     const id = setInterval(read, 300);
     return () => clearInterval(id);
   }, []);
 
+  // Logique de parallaxe sur le background
   const { scrollY } = useScroll();
-  const bgY = useTransform(scrollY, [0, 600], ['0%', '15%']);
+  const bgY = useTransform(scrollY, [0, 600], ['0%', '20%']);
 
+  // Configuration par défaut si manquante
   const heroTitle = config?.hero?.title ?? 'Mister RenoConstruct';
   const heroDescription =
     config?.hero?.description ??
@@ -113,106 +137,88 @@ export function Hero({ config }: HeroProps) {
       id="hero"
       ref={containerRef}
       aria-labelledby={`hero-heading-${headingId}`}
-      className="relative w-full overflow-hidden bg-slate-50 flex flex-col"
-      // Occupe exactement 100dvh, stats ancrées en bas
+      className="relative w-full overflow-hidden bg-[#050505] flex flex-col"
       style={{ height: '100dvh', minHeight: '560px' }}
     >
-      {/* ── IMAGE DE FOND ── */}
-      <motion.div className="absolute inset-0 z-0 overflow-hidden" style={{ y: bgY }}>
+      {/* ── IMAGE DE FOND (Sombre & Contrastée) ── */}
+      <motion.div 
+        className="absolute inset-0 z-0 overflow-hidden" 
+        style={{ y: bgY }}
+      >
         <motion.div
           className="absolute inset-0 w-full h-full"
-          initial={{ opacity: 0, scale: 1.08 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 0.45, scale: 1 }}
+          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
         >
           <Image
             src={config?.hero?.backgroundImage || '/Hero.jpg'}
             alt="Chantier Mister RenoConstruct"
-            fill priority
-            className="object-cover object-right"
+            fill
+            priority
+            className="object-cover object-right "
             sizes="100vw"
           />
         </motion.div>
       </motion.div>
 
-      {/* ── OVERLAYS ── */}
+      {/* ── OVERLAYS NOIR PROFOND ── */}
       <div className="absolute inset-0 z-[1] pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent" />
+        {/* Gradient latéral pour assurer la lisibilité du texte */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/90 to-transparent lg:from-[#050505] lg:via-[#050505]/80" />
+        {/* Gradient montant pour fusionner avec la barre de stats */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
       </div>
 
-      {/* ── TEXTURE ── */}
+      {/* ── TEXTURE NOISE ── */}
       <div
-        className="absolute inset-0 z-[2] opacity-[0.03] pointer-events-none"
+        className="absolute inset-0 z-[2] opacity-[0.04] pointer-events-none mix-blend-overlay"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat',
-          backgroundSize: '128px',
         }}
       />
 
-      {/* ── LIGNE DÉCORATIVE ORANGE ── */}
-      <motion.div
-        className="absolute left-[calc(50%-1px)] top-0 bottom-0 z-[3] hidden lg:block"
-        style={{
-          background: 'linear-gradient(to bottom, transparent, rgba(230,153,56,0.2), transparent)',
-          width: 1,
-        }}
-        initial={{ scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.5, delay: 0.5, ease: 'easeInOut' }}
-      />
-
-      {/*
-        ── CONTENU PRINCIPAL ──
-        flex-1 + flex col + justify-center : le contenu prend tout l'espace disponible
-        entre le header et la barre stats.
-        Les marges entre blocs utilisent clamp() : larges sur grand écran, mini sur SE.
-      */}
+      {/* ── CONTENU PRINCIPAL ── */}
       <div
         className="relative z-10 flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 overflow-hidden"
         style={{
-          paddingTop: `${headerHeight + 12}px`,
-          paddingBottom: `${statsHeight + 8}px`,
+          paddingTop: `${headerHeight + 20}px`,
+          paddingBottom: `${statsHeight + 10}px`,
         }}
       >
         <motion.div
           className="max-w-3xl flex flex-col"
-          // Pas de y transform ici — ça décalait le contenu hors écran sur petits formats
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-
-          {/* Badges */}
+          {/* Badge Vibrant Orange */}
           <motion.div
             className="flex flex-wrap items-center gap-2 sm:gap-3"
-            style={{ marginBottom: 'clamp(0.5rem, 2vh, 1.25rem)' }}
+            style={{ marginBottom: 'clamp(1rem, 3vh, 1.5rem)' }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
           >
-            <div className="flex items-center gap-2 bg-orange-50 border border-orange-100 px-3 py-1.5 rounded-full shadow-sm">
-              <HardHat className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-[#e69938]" />
+            <div className="flex items-center gap-2 bg-[#e69938]/15 border border-[#e69938]/30 px-3.5 py-1.5 rounded-full shadow-lg backdrop-blur-md">
+              <HardHat className="h-3.5 w-3.5 text-[#e69938]" />
               <span
-                className="text-[#e69938] text-[9px] sm:text-[10px] font-bold uppercase tracking-widest"
+                className="text-[#e69938] text-[10px] font-black uppercase tracking-[0.2em]"
                 style={{ fontFamily: "'DM Sans', sans-serif" }}
               >
                 Entreprise Générale du BTP
               </span>
             </div>
-
           </motion.div>
 
-          {/* H1 */}
-          <div className="overflow-hidden" style={{ marginBottom: 'clamp(0.5rem, 1.5vh, 1rem)' }}>
+          {/* Titre Principal H1 (Blanc Pur) */}
+          <div className="overflow-hidden" style={{ marginBottom: 'clamp(0.75rem, 2vh, 1.25rem)' }}>
             <motion.h1
               id={`hero-heading-${headingId}`}
-              className="text-slate-900 font-bold leading-[1.05]"
+              className="text-white font-bold leading-[1.05]"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                // Sur SE (375px/590px) → ~2rem, desktop → 5rem
-                fontSize: 'clamp(1.9rem, 5.5vw + 0.5vh, 5rem)',
+                fontSize: 'clamp(2.2rem, 6vw + 0.5vh, 5.5rem)',
                 letterSpacing: '-0.02em',
               }}
               initial={{ y: '110%' }}
@@ -223,25 +229,23 @@ export function Hero({ config }: HeroProps) {
             </motion.h1>
           </div>
 
-          {/* Ligne orange */}
+          {/* Ligne de séparation Orange */}
           <motion.div
-            className="h-[3px] w-16 sm:w-24 bg-gradient-to-r from-[#e69938] to-[#fcd288] rounded-full"
-            style={{ marginBottom: 'clamp(0.5rem, 2vh, 1.5rem)' }}
+            className="h-[3px] w-20 bg-[#e69938]"
+            style={{ marginBottom: 'clamp(1rem, 2.5vh, 2rem)' }}
             initial={{ scaleX: 0, originX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.9, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           />
 
-          {/* Description — masquée sur très petits écrans si nécessaire */}
+          {/* Description (Slate Light / Gris clair) */}
           <motion.p
-            className="text-slate-600 leading-relaxed max-w-xl"
+            className="text-slate-400 leading-relaxed max-w-xl"
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              // Sur SE → 0.8rem, desktop → 1.1rem
-              fontSize: 'clamp(0.8rem, 1.5vw + 0.3vh, 1.1rem)',
+              fontSize: 'clamp(0.9rem, 1.6vw + 0.3vh, 1.15rem)',
               fontWeight: 400,
-              marginBottom: 'clamp(0.6rem, 2vh, 2rem)',
-              // Limite à 4 lignes sur très petits écrans pour ne pas pousser les CTAs
+              marginBottom: 'clamp(1.5rem, 3vh, 2.5rem)',
               display: '-webkit-box',
               WebkitLineClamp: 4,
               WebkitBoxOrient: 'vertical' as const,
@@ -254,14 +258,10 @@ export function Hero({ config }: HeroProps) {
             {heroDescription}
           </motion.p>
 
-          {/* Services tags — masqués sur hauteur < 620px pour préserver les CTAs */}
+          {/* Tags Services (Effet Verre Sombre) */}
           <motion.div
-            className="flex flex-wrap gap-1.5 sm:gap-3"
-            style={{
-              marginBottom: 'clamp(0.6rem, 2vh, 2rem)',
-              // Sur iPhone SE (h≈590px) on cache les tags pour gagner de la place
-              display: 'flex',
-            }}
+            className="flex flex-wrap gap-2 sm:gap-3"
+            style={{ marginBottom: 'clamp(2rem, 4vh, 3rem)', display: 'flex' }}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.5 }}
@@ -269,11 +269,11 @@ export function Hero({ config }: HeroProps) {
             {SERVICES.map(({ icon: Icon, label }) => (
               <div
                 key={label}
-                className="flex items-center gap-1.5 border border-slate-200 bg-white/60 backdrop-blur-sm px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-slate-700 shadow-sm transition-all hover:border-[#e69938]/40 hover:bg-white"
+                className="flex items-center gap-2 border border-white/10 bg-white/5 backdrop-blur-md px-4 py-2 rounded-lg text-white shadow-2xl transition-all hover:border-[#e69938]/50 hover:bg-white/10 group"
               >
-                <Icon className="h-3 w-3 sm:h-4 sm:w-4 text-[#e69938] shrink-0" />
+                <Icon className="h-4 w-4 text-[#e69938] shrink-0 group-hover:scale-110 transition-transform" />
                 <span
-                  className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider whitespace-nowrap"
+                  className="text-[10px] font-black uppercase tracking-widest whitespace-nowrap"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}
                 >
                   {label}
@@ -282,26 +282,27 @@ export function Hero({ config }: HeroProps) {
             ))}
           </motion.div>
 
-          {/* CTAs — toujours visibles, jamais compressés */}
+          {/* Boutons d'appel à l'action */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-2.5 sm:gap-4"
+            className="flex flex-col sm:flex-row gap-4"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.5 }}
           >
             <motion.a
               href={config?.hero?.ctaLink ?? '#contact'}
-              className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#e69938] to-[#f97316] text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-md font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-orange-500/20"
+              className="group inline-flex items-center justify-center gap-2 bg-[#e69938] text-white px-10 py-4 rounded-md font-black text-sm uppercase tracking-widest shadow-[0_10px_30px_rgba(230,153,56,0.3)]"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.02, backgroundColor: '#f97316' }}
               whileTap={{ scale: 0.98 }}
             >
               {config?.hero?.ctaText ?? 'Obtenir un devis gratuit'}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </motion.a>
+            
             <motion.a
               href={`tel:${config?.contact?.phone ?? ''}`}
-              className="inline-flex items-center justify-center gap-2 border border-slate-300 bg-white/50 backdrop-blur-sm text-slate-700 px-6 sm:px-8 py-3 sm:py-3.5 rounded-md font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-white hover:border-slate-400 transition-colors shadow-sm"
+              className="inline-flex items-center justify-center gap-2 border-2 border-white/20 bg-transparent text-white px-10 py-4 rounded-md font-black text-sm uppercase tracking-widest hover:bg-white/5 hover:border-white/40 transition-all shadow-sm"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -310,54 +311,48 @@ export function Hero({ config }: HeroProps) {
               {config?.contact?.phone ?? 'Nous appeler'}
             </motion.a>
           </motion.div>
-
         </motion.div>
       </div>
 
-      {/*
-        ── BARRE DE STATS ──
-        position: absolute + bottom: 0 → toujours collée en bas,
-        n'influence pas le flux du contenu
-      */}
+      {/* ── BARRE DE STATISTIQUES (Noir sur Noir) ── */}
       <motion.div
         ref={statsRef}
-        className="absolute bottom-0 left-0 right-0 z-10 border-t border-slate-200 bg-white/85 backdrop-blur-lg"
+        className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/5 bg-[#050505]/95 backdrop-blur-2xl"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.6 }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-10 lg:px-16 flex flex-row justify-between divide-x divide-slate-200">
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 flex flex-row justify-between divide-x divide-white/5">
           {stats.map((stat, index) => {
             const Icon = IconMap[stat.icon] || Hammer;
             return (
               <motion.div
                 key={stat.id}
-                className="flex flex-col justify-center py-3 sm:py-4 px-3 sm:px-8 flex-1 first:pl-0 last:pr-0"
-                initial={{ opacity: 0, y: 12 }}
+                className="flex flex-col justify-center py-6 sm:py-10 px-4 sm:px-8 flex-1 first:pl-0 last:pr-0 items-center sm:items-start"
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3 + index * 0.1, duration: 0.5 }}
               >
-                <div className="flex items-center gap-1.5 sm:gap-2.5 mb-0.5">
-                  <div className="p-1 sm:p-1.5 rounded-md bg-orange-50 text-[#e69938] shrink-0">
-                    <Icon className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
+                <div className="flex items-center gap-2 sm:gap-3 mb-1.5">
+                  <div className="p-1.5 rounded-md bg-[#e69938]/10 text-[#e69938] shrink-0 border border-[#e69938]/20">
+                    <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </div>
                   <span
-                    className="text-slate-900 font-bold leading-none"
+                    className="text-white font-bold leading-none italic"
                     style={{
                       fontFamily: "'Cormorant Garamond', serif",
-                      // Compact sur mobile pour tenir en une ligne
-                      fontSize: 'clamp(1.2rem, 3vw, 2.2rem)',
+                      fontSize: 'clamp(1.5rem, 3.5vw, 2.5rem)',
                     }}
                   >
                     <Counter value={stat.value} />
                   </span>
                 </div>
                 <span
-                  className="text-slate-500 uppercase font-bold tracking-widest pl-0.5"
+                  className="text-slate-500 uppercase font-black tracking-[0.2em] pl-0.5"
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 'clamp(7px, 1.5vw, 11px)',
+                    fontSize: 'clamp(8px, 1.2vw, 10px)',
                   }}
                 >
                   {stat.label}
