@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, HardHat } from 'lucide-react';
+import { HardHat } from 'lucide-react';
 import Image from 'next/image';
 import { useRef } from 'react';
 import type { SiteConfig } from '@/types/site-config';
@@ -12,7 +12,7 @@ interface ServicesProps {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease:[0.22, 1, 0.36, 1] } },
 };
 
 const stagger = {
@@ -83,7 +83,7 @@ export function Services({ config }: ServicesProps) {
           {/* GRANDE CARTE (Images 100% Couleur) */}
           {featured && (
             <motion.div variants={fadeUp} className="w-full">
-              <div className="group relative overflow-hidden rounded-2xl h-[350px] sm:h-[480px] cursor-pointer shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10">
+              <div className="group relative overflow-hidden rounded-2xl h-[350px] sm:h-[480px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10">
                 
                 {/* Image : Vive et colorée */}
                 <Image
@@ -94,36 +94,28 @@ export function Services({ config }: ServicesProps) {
                 />
                 
                 {/* Gradient de lisibilité (uniquement en bas) */}
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#050505] via-[#050505]/70 to-transparent" />
                 
-                {/* Badge Prix */}
-                <div className="absolute top-8 right-8">
-                  <span className="bg-[#e69938] text-white px-5 py-2.5 rounded-md text-xs font-black shadow-xl uppercase tracking-widest border border-white/10">
+                {/* Badge Prix - Harmonisé en Noir / Verre dépoli */}
+                <div className="absolute top-6 right-6 sm:top-8 sm:right-8">
+                  <span className="bg-[#050505]/90 backdrop-blur-md text-white border border-white/20 px-4 py-2 rounded-md text-[10px] font-black uppercase tracking-widest shadow-xl">
                     {featured.price}
                   </span>
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-14 flex flex-col md:flex-row md:items-end justify-between gap-8">
-                  <div className="max-w-2xl">
+                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-14 flex flex-col justify-end">
+                  <div className="max-w-3xl">
                     <h3
-                      className="text-white font-bold mb-4"
+                      className="text-white font-bold mb-3 sm:mb-4"
                       style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(2rem, 4vw, 3rem)' }}
                     >
                       {featured.title}
                     </h3>
-                    <p className="text-white/90 text-sm sm:text-xl font-light leading-relaxed">
+                    {/* line-clamp-3 sur mobile pour éviter le pavé de texte, texte complet sur PC */}
+                    <p className="text-white/90 text-sm sm:text-lg lg:text-xl font-light leading-relaxed line-clamp-3 sm:line-clamp-none">
                       {featured.description}
                     </p>
                   </div>
-                  <motion.a
-                    href="#contact"
-                    className="shrink-0 inline-flex items-center gap-3 bg-[#e69938] text-white px-10 py-4 rounded-md text-sm font-black uppercase tracking-widest hover:bg-[#f97316] transition-all shadow-2xl shadow-orange-500/40"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Découvrir
-                    <ArrowRight className="h-5 w-5" />
-                  </motion.a>
                 </div>
               </div>
             </motion.div>
@@ -136,7 +128,7 @@ export function Services({ config }: ServicesProps) {
                 <motion.div key={service.id} variants={fadeUp}>
                   <div className="group h-full flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0a0a0a] hover:bg-white/[0.04] transition-all duration-500 hover:-translate-y-2 shadow-xl">
                     
-                    {/* Image : Vive et colorée */}
+                    {/* Image */}
                     <div className="relative h-56 sm:h-64 overflow-hidden shrink-0">
                       <Image
                         src={service.image || '/placeholder.svg'}
@@ -152,28 +144,21 @@ export function Services({ config }: ServicesProps) {
                     </div>
 
                     {/* Contenu */}
-                    <div className="p-8 flex flex-col flex-grow">
-                      <div className="flex items-center gap-4 mb-5">
-                        <div className="w-12 h-12 rounded-xl bg-[#e69938]/20 border border-[#e69938]/30 text-[#e69938] flex items-center justify-center text-2xl shrink-0">
+                    <div className="p-6 sm:p-8 flex flex-col flex-grow">
+                      <div className="flex items-center gap-4 mb-4 sm:mb-5">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#e69938]/10 border border-[#e69938]/20 text-[#e69938] flex items-center justify-center text-xl sm:text-2xl shrink-0">
                           {service.icon}
                         </div>
                         <h3
                           className="text-white font-bold leading-tight"
-                          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.7rem' }}
+                          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.4rem, 2vw, 1.7rem)' }}
                         >
                           {service.title}
                         </h3>
                       </div>
-                      <p className="text-white/70 text-sm line-clamp-3 mb-8 flex-grow font-light leading-relaxed">
+                      <p className="text-white/70 text-sm line-clamp-3 flex-grow font-light leading-relaxed">
                         {service.description}
                       </p>
-
-                      <div className="pt-6 border-t border-white/5">
-                        <a href="#contact" className="text-[#e69938] text-[11px] font-black uppercase tracking-[0.2em] flex items-center gap-2 group/link">
-                          Consulter l'expertise
-                          <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-2" />
-                        </a>
-                      </div>
                     </div>
 
                   </div>
